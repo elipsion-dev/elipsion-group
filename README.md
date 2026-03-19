@@ -10,19 +10,6 @@ Junk Removal Services – Serving Southern Indiana with fast, reliable residenti
 
 ElipsionAI – Providing free AI roadmaps and custom AI integration services for small businesses.
 
-📁 Project Structure
-/elipsion-group-holdings
-│
-├── index.html        # Main landing page
-├── removal.html      # Junk removal services page
-├── ai.html           # ElipsionAI services page
-│
-├── style.css         # Global styles
-├── script.js         # Basic interactivity
-│
-└── assets/
-    ├── elipsion-logo.svg
-    └── elipsionai-logo.svg
 🎨 Design Philosophy
 
 Clean, modern, and professional
@@ -39,19 +26,6 @@ This site is designed to be easily deployed using:
 
 GitHub Pages
 
-Any static hosting provider
-
-To deploy with GitHub Pages:
-
-Push this repository to GitHub
-
-Go to Settings → Pages
-
-Select the main branch
-
-Your site will be live at:
-
-https://your-username.github.io/repo-name/
 🧠 Services Highlighted
 Removal Experts
 
