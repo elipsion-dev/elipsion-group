@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" role="img" aria-label="ElipsionAI monochrome logo mark">
+  <path
+    d="M32 4.5 53.5 17v25L32 54.5 10.5 42V17L32 4.5Z"
+    fill="currentColor"
+  />
+  <path
+    d="M42.5 18.5H23V45.5H42.5M23 32H37"
+    stroke="white"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="46.5" cy="18.5" r="4.25" fill="white" stroke="currentColor" stroke-width="2"/>
+</svg>

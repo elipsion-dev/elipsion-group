@@ -1,0 +1,219 @@
+/* ============================================================
+   animations.css — Keyframes, Scroll-Reveal, Helper Classes
+   Lead-Capture-Site — vanilla HTML/CSS/JS
+   ============================================================ */
+
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+/* Background aurora blobs drift */
+@keyframes auroraDrift {
+  0%   { transform: translate(0,    0)    scale(1);    opacity: 0.18; }
+  50%  { transform: translate(4%,   6%)   scale(1.08); opacity: 0.22; }
+  100% { transform: translate(-3%,  10%)  scale(0.95); opacity: 0.15; }
+}
+
+/* Hero mockup card float */
+@keyframes float {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-6px); }
+}
+
+/* Glow pulse (box-shadow cycling) */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 24px -4px var(--accent-glow); opacity: 1;    }
+  50%       { box-shadow: 0 0 48px  0   var(--accent-glow); opacity: 0.85; }
+}
+
+@keyframes pulseGlowGreen {
+  0%, 100% { box-shadow: 0 0 24px -4px var(--green-glow); }
+  50%       { box-shadow: 0 0 48px  0   var(--green-glow); }
+}
+
+/* Notification / toast slides in from right */
+@keyframes slideInNotif {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+/* SVG stroke draw-on */
+@keyframes drawLine {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0;    }
+}
+
+/* Sparkle spin + fade */
+@keyframes sparkle {
+  0%   { opacity: 0;    transform: scale(0)   rotate(0deg);   }
+  40%  { opacity: 1;    transform: scale(1)   rotate(180deg); }
+  100% { opacity: 0;    transform: scale(0.5) rotate(360deg); }
+}
+
+/* Fade in up (used by modals, toasts) */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Simple fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Shimmer / skeleton loading */
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+/* Subtle scale-in for badges/chips */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+
+/* ============================================================
+   SCROLL REVEAL
+   Base state: invisible + shifted. JS adds .is-visible once
+   the element enters the viewport via IntersectionObserver.
+   ============================================================ */
+.reveal {
+  opacity:    0;
+  transform:  translateY(24px);
+  transition:
+    opacity   0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Per-element delay via inline style: --reveal-delay:120ms */
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity:   1;
+  transform: none;
+}
+
+/* Direction variants */
+.reveal--left {
+  transform: translateX(-32px);
+}
+
+.reveal--right {
+  transform: translateX(32px);
+}
+
+.reveal--scale {
+  transform: scale(0.92) translateY(12px);
+}
+
+/* When .is-visible is applied, all variants resolve to identity */
+.reveal--left.is-visible,
+.reveal--right.is-visible,
+.reveal--scale.is-visible {
+  opacity:   1;
+  transform: none;
+}
+
+
+/* ============================================================
+   ANIMATION HELPER CLASSES
+   Apply to elements that should loop continuously.
+   Use inline style="--anim-delay:200ms" for offset.
+   ============================================================ */
+
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.8s ease-in-out infinite;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-pulse-glow-green {
+  animation: pulseGlowGreen 2.8s ease-in-out infinite;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-slide-notif {
+  animation: slideInNotif 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease both;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-sparkle {
+  animation: sparkle 1.2s ease-in-out infinite;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+.animate-draw-line {
+  stroke-dasharray:  1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 1.2s ease forwards;
+  animation-delay: var(--anim-delay, 0s);
+}
+
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION
+   Disable ALL animations and transitions. Also forces
+   .reveal elements to be immediately visible.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  /* Stop all keyframe animations */
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
+
+  /* Make reveal elements immediately visible */
+  .reveal,
+  .reveal--left,
+  .reveal--right,
+  .reveal--scale {
+    opacity:          1;
+    transform:        none;
+    transition:       none;
+    transition-delay: 0ms;
+  }
+
+  /* Freeze aurora background */
+  .bg-aurora::before,
+  .bg-aurora::after {
+    animation: none;
+    opacity:   0.12;
+  }
+}

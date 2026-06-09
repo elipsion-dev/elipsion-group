@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Page-specific ────────────────────────────────────── -->
+  <title>Demo: HVAC Lead-Capture System | ElipsionAI</title>
+  <meta name="description" content="See a sample HVAC lead-capture system in action — before &amp; after for Riverbend Heating &amp; Air, a fictional Southern Indiana HVAC business." />
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Demo: HVAC Lead-Capture System | ElipsionAI" />
+  <meta property="og:description" content="A before-and-after walkthrough of a done-for-you lead-capture system built for HVAC contractors. Sample business: Riverbend Heating &amp; Air." />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.elipsiongroup.com/demo.html" />
+  <!-- <meta property="og:image" content="assets/og-image.jpg" /> -->
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Demo: HVAC Lead-Capture System | ElipsionAI" />
+  <meta name="twitter:description" content="See how I turn a leaky HVAC setup into one where every lead has a next step." />
+  <!-- ─────────────────────────────────────────────────────── -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <!-- Demo-page styles -->
+  <link rel="stylesheet" href="css/demo.css" />
+</head>
+<body>
+
+  <div class="bg-aurora"></div>
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+
+      <a href="index.html" class="brand" aria-label="ElipsionAI home">
+        <img src="assets/eai-mark.png" alt="" class="brand__logo" width="46" height="32" />
+        <span class="brand__name" data-config="brandName">ElipsionAI</span>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="demo.html" class="is-active" aria-current="page">Demo</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav__cta">
+        <a href="audit.html" class="btn btn--primary btn--sm">
+          Request Free Audit
+          <i data-lucide="arrow-right"></i>
+        </a>
+      </div>
+
+      <button
+        class="nav__toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <i data-lucide="menu"></i>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ── MOBILE MENU ───────────────────────────────────────── -->
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+    <ul class="mobile-menu__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="demo.html" class="is-active" aria-current="page">Demo</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+    <div class="mobile-menu__cta">
+      <a href="audit.html" class="btn btn--primary">
+        Request Free Audit
+        <i data-lucide="arrow-right"></i>
+      </a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ══════════════════════════════════════════════════════
+         A) DEMO HERO / INTRO
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Demo hero section -->
+    <section id="demo-hero" class="demo-intro">
+      <div class="container">
+        <div class="demo-intro__inner reveal">
+          <div class="demo-intro__eyebrow">
+            <span class="demo-intro__dot" aria-hidden="true"></span>
+            Interactive HVAC website demo
+          </div>
+          <h1>See the difference a complete lead-capture setup makes.</h1>
+          <p>
+            Switch between the original website and the rebuilt version for Riverbend
+            Heating &amp; Air, a fictional Southern Indiana HVAC company.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         B) BEFORE vs AFTER WEBSITE MOCKUP
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Browser-window mockup with Before/After tab switcher -->
+    <section id="demo-mockup" class="demo-comparison" data-tabs-parent>
+      <div class="container">
+        <div class="demo-comparison__top reveal">
+          <div>
+            <span class="demo-comparison__kicker">Same company. Same services. Better customer path.</span>
+            <h2>Toggle the website rebuild</h2>
+          </div>
+          <div class="demo-switch tabs" role="tablist" aria-label="Website version">
+            <button data-tab="before" role="tab" aria-selected="true" class="is-active">
+              <span class="demo-switch__label">Original site</span>
+              <span class="demo-switch__meta">Basic free template</span>
+            </button>
+            <button data-tab="after" role="tab" aria-selected="false">
+              <span class="demo-switch__label">Lead-capture rebuild</span>
+              <span class="demo-switch__meta">Complete customer path</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="reveal" style="--reveal-delay: 80ms;">
+          <div class="tab-panels demo-panels">
+            <div data-panel="before" class="is-active">
+              <div class="browser browser--site" aria-label="Original outdated HVAC website example">
+                <div class="browser__chrome">
+                  <div class="browser__dots" aria-hidden="true">
+                    <div class="browser__dot browser__dot--red"></div>
+                    <div class="browser__dot browser__dot--yellow"></div>
+                    <div class="browser__dot browser__dot--green"></div>
+                  </div>
+                  <div class="browser__url">riverbendheatingandair.com</div>
+                  <div class="browser__status">Original website</div>
+                </div>
+                <div class="browser__body browser__body--viewport">
+                  <div class="legacy-site">
+                    <div class="legacy-site__utility">
+                      <span>Serving Southern Indiana Since 1999</span>
+                      <span>Monday-Friday 8:00 AM-5:00 PM</span>
+                    </div>
+                    <header class="legacy-site__header">
+                      <div class="legacy-logo">
+                        <span class="legacy-logo__sun" aria-hidden="true">R</span>
+                        <span><strong>Riverbend</strong><small>Heating &amp; Air</small></span>
+                      </div>
+                      <div class="legacy-site__phone">
+                        <small>CALL US TODAY</small>
+                        <strong>(812) 555-0178</strong>
+                      </div>
+                    </header>
+                    <nav class="legacy-site__nav" aria-label="Original website navigation">
+                      <span>HOME</span><span>ABOUT US</span><span>SERVICES</span>
+                      <span>PRODUCTS</span><span>CONTACT</span>
+                    </nav>
+                    <div class="legacy-site__hero">
+                      <div class="legacy-site__hero-copy">
+                        <div class="legacy-site__welcome">WELCOME TO RIVERBEND</div>
+                        <h3>Your Comfort Is<br />Our Business!</h3>
+                        <p>
+                          Quality heating and cooling service for residential and
+                          commercial customers throughout Southern Indiana.
+                        </p>
+                        <span class="legacy-button">LEARN MORE</span>
+                      </div>
+                    </div>
+                    <div class="legacy-site__lower">
+                      <div class="legacy-service">
+                        <span class="legacy-service__icon">AC</span>
+                        <div><strong>Cooling</strong><small>Sales &amp; Service</small></div>
+                      </div>
+                      <div class="legacy-service">
+                        <span class="legacy-service__icon">HEAT</span>
+                        <div><strong>Heating</strong><small>Repair &amp; Installation</small></div>
+                      </div>
+                      <div class="legacy-service">
+                        <span class="legacy-service__icon">AIR</span>
+                        <div><strong>Air Quality</strong><small>Cleaner Indoor Air</small></div>
+                      </div>
+                      <aside class="legacy-contact">
+                        <strong>Contact Us</strong>
+                        <span>Call for service or an estimate.</span>
+                        <b>(812) 555-0178</b>
+                      </aside>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="demo-panel-note">
+                A believable older template: phone-first, generic copy, no quote form,
+                no after-hours path, and no visible follow-up system.
+              </p>
+            </div>
+
+            <div data-panel="after">
+              <div class="browser browser--site browser--after" aria-label="Rebuilt HVAC lead-capture website example">
+                <div class="browser__chrome">
+                  <div class="browser__dots" aria-hidden="true">
+                    <div class="browser__dot browser__dot--red"></div>
+                    <div class="browser__dot browser__dot--yellow"></div>
+                    <div class="browser__dot browser__dot--green"></div>
+                  </div>
+                  <div class="browser__url">riverbendheatingandair.com</div>
+                  <div class="browser__status browser__status--live">Lead-capture rebuild</div>
+                </div>
+                <div class="browser__body browser__body--viewport">
+                  <div class="rebuild-site">
+                    <div class="rebuild-site__notice">
+                      <span><b>Need HVAC help?</b> Request service online anytime.</span>
+                      <span>Serving Tell City, Cannelton, Troy &amp; nearby areas</span>
+                    </div>
+                    <header class="rebuild-site__header">
+                      <div class="rebuild-logo">
+                        <span class="rebuild-logo__mark"><i data-lucide="waves"></i></span>
+                        <span><strong>Riverbend</strong><small>Heating &amp; Air</small></span>
+                      </div>
+                      <nav class="rebuild-site__nav" aria-label="Rebuilt website navigation">
+                        <span>Services</span><span>Service Area</span><span>Reviews</span><span>About</span>
+                      </nav>
+                      <div class="rebuild-site__actions">
+                        <span class="rebuild-phone"><small>Call now</small><b>(812) 555-0178</b></span>
+                        <span class="rebuild-button">Request Service</span>
+                      </div>
+                    </header>
+                    <div class="rebuild-site__hero">
+                      <div class="rebuild-site__photo" aria-hidden="true"></div>
+                      <div class="rebuild-site__overlay"></div>
+                      <div class="rebuild-site__hero-copy">
+                        <span class="rebuild-site__availability">
+                          <i data-lucide="clock-3"></i> Online requests open 24/7
+                        </span>
+                        <h3>Fast, local HVAC help without the phone tag.</h3>
+                        <p>
+                          AC repair, heating service, maintenance, and indoor air
+                          quality for homes across Southern Indiana.
+                        </p>
+                        <div class="rebuild-site__hero-actions">
+                          <span class="rebuild-button rebuild-button--large">Request a Quote</span>
+                          <span class="rebuild-call"><i data-lucide="phone"></i> Call (812) 555-0178</span>
+                        </div>
+                        <div class="rebuild-site__proof">
+                          <span><i data-lucide="star"></i><b>4.9</b> Google rating</span>
+                          <span><i data-lucide="map-pin"></i>Local service team</span>
+                          <span><i data-lucide="message-square-text"></i>Fast follow-up</span>
+                        </div>
+                      </div>
+                      <aside class="rebuild-form">
+                        <div class="rebuild-form__heading">
+                          <span class="rebuild-form__icon"><i data-lucide="clipboard-check"></i></span>
+                          <span><strong>Request HVAC service</strong><small>Usually takes under 2 minutes</small></span>
+                        </div>
+                        <label><span>Name</span><b>Sarah Miller</b></label>
+                        <div class="rebuild-form__row">
+                          <label><span>Phone</span><b>(812) 555-0142</b></label>
+                          <label><span>Service</span><b>AC repair</b></label>
+                        </div>
+                        <label><span>What is happening?</span><b>AC is running but not cooling...</b></label>
+                        <div class="rebuild-form__options">
+                          <span><i data-lucide="camera"></i> Add photos</span>
+                          <span><i data-lucide="zap"></i> Mark urgent</span>
+                        </div>
+                        <span class="rebuild-form__submit">Send My Request <i data-lucide="arrow-right"></i></span>
+                        <small class="rebuild-form__privacy"><i data-lucide="shield-check"></i> Your information stays private.</small>
+                      </aside>
+                    </div>
+                    <div class="rebuild-site__system">
+                      <div class="rebuild-system__item">
+                        <span class="rebuild-system__icon"><i data-lucide="phone-missed"></i></span>
+                        <span><small>Missed call</small><strong>Instant text-back</strong></span>
+                      </div>
+                      <div class="rebuild-system__arrow"><i data-lucide="chevron-right"></i></div>
+                      <div class="rebuild-system__item">
+                        <span class="rebuild-system__icon"><i data-lucide="clipboard-list"></i></span>
+                        <span><small>Quote request</small><strong>Details + photos</strong></span>
+                      </div>
+                      <div class="rebuild-system__arrow"><i data-lucide="chevron-right"></i></div>
+                      <div class="rebuild-system__item">
+                        <span class="rebuild-system__icon"><i data-lucide="list-checks"></i></span>
+                        <span><small>Lead tracker</small><strong>Follow-up organized</strong></span>
+                      </div>
+                      <div class="rebuild-system__arrow"><i data-lucide="chevron-right"></i></div>
+                      <div class="rebuild-system__item">
+                        <span class="rebuild-system__icon"><i data-lucide="star"></i></span>
+                        <span><small>Job completed</small><strong>Review request ready</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="demo-panel-note demo-panel-note--after">
+                The rebuild gives every visitor a clear next step and connects the website
+                to missed-call follow-up, lead tracking, review requests, and Google profile improvements.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         C) QUOTE FORM EXAMPLE
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Non-submitting HVAC quote form mockup -->
+    <section id="demo-form" class="section section--alt">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">Lead Capture Form</span>
+          </div>
+          <h2>The quote form that catches every lead</h2>
+          <p class="text-muted">
+            Instead of "call us during business hours," visitors fill this out — so you wake up
+            to qualified leads with details and photos, ready to follow up.
+          </p>
+        </div>
+
+        <div class="max-840 mx-auto reveal" style="--reveal-delay: 80ms;">
+          <div class="card card--glass">
+
+            <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <div class="icon-chip icon-chip--cyan">
+                <i data-lucide="clipboard-list"></i>
+              </div>
+              <div>
+                <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;">
+                  Request a Quote — Riverbend Heating &amp; Air
+                </div>
+                <div class="text-sm text-muted">
+                  Example form — not connected on this demo page.
+                </div>
+              </div>
+            </div>
+
+            <!-- Demo form — no data-audit-form; submit button is type="button" disabled -->
+            <form id="demo-quote-form" novalidate>
+              <div class="form-group">
+
+                <div class="field--row">
+                  <div class="field">
+                    <label for="dq-name">Your Name <span class="required-star">*</span></label>
+                    <input type="text" id="dq-name" name="name" placeholder="Sarah Miller" tabindex="0" />
+                  </div>
+                  <div class="field">
+                    <label for="dq-phone">Phone <span class="required-star">*</span></label>
+                    <input type="tel" id="dq-phone" name="phone" placeholder="(812) 555-0000" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="dq-email">Email</label>
+                  <input type="email" id="dq-email" name="email" placeholder="sarah@example.com" />
+                </div>
+
+                <div class="field">
+                  <label for="dq-service">Service Needed <span class="required-star">*</span></label>
+                  <select id="dq-service" name="service">
+                    <option value="" disabled selected>Select a service…</option>
+                    <option value="ac-repair">AC Repair</option>
+                    <option value="furnace">Furnace Repair / Installation</option>
+                    <option value="maintenance">Heating &amp; Cooling Maintenance</option>
+                    <option value="iaq">Indoor Air Quality</option>
+                    <option value="emergency">Emergency HVAC Service</option>
+                    <option value="other">Other / Not Sure</option>
+                  </select>
+                </div>
+
+                <div class="field--row">
+                  <div class="field">
+                    <label for="dq-running">Is the system running?</label>
+                    <select id="dq-running" name="running">
+                      <option value="" disabled selected>Select…</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No — completely out</option>
+                      <option value="partial">Partially (struggling)</option>
+                      <option value="not-sure">Not sure</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="dq-urgency">Urgency</label>
+                    <select id="dq-urgency" name="urgency">
+                      <option value="" disabled selected>Select…</option>
+                      <option value="emergency">Emergency — need help today</option>
+                      <option value="week">This week</option>
+                      <option value="flexible">Flexible</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="dq-description">Brief Description</label>
+                  <textarea
+                    id="dq-description"
+                    name="description"
+                    placeholder="e.g. AC stopped cooling overnight, outdoor unit is running but house won't get below 80°…"
+                  ></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="dq-photo">Upload a Photo (optional)</label>
+                  <input type="file" id="dq-photo" name="photo" accept="image/*" />
+                  <span class="field__hint">Helps diagnose faster. JPG, PNG, or HEIC.</span>
+                </div>
+
+                <div class="field">
+                  <label>Preferred Contact Method</label>
+                  <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 4px;">
+                    <label class="checkbox">
+                      <input type="radio" name="contact-pref" value="call" /> Call
+                    </label>
+                    <label class="checkbox">
+                      <input type="radio" name="contact-pref" value="text" /> Text
+                    </label>
+                    <label class="checkbox">
+                      <input type="radio" name="contact-pref" value="email" /> Email
+                    </label>
+                  </div>
+                </div>
+
+                <label class="checkbox">
+                  <input type="checkbox" name="demo-consent" />
+                  I agree to be contacted about my request by phone, text, or email.
+                </label>
+
+              </div><!-- /.form-group -->
+
+              <!-- Disabled submit — type="button" prevents any form action -->
+              <button
+                type="button"
+                class="btn btn--primary btn--lg btn--full"
+                aria-disabled="true"
+                style="margin-top: 24px; opacity: 0.55; cursor: not-allowed; pointer-events: none;"
+              >
+                Submit Request
+                <i data-lucide="arrow-right"></i>
+              </button>
+              <p class="text-sm text-muted center" style="margin-top: 12px;">
+                Example form — not connected on this demo page.
+              </p>
+
+            </form>
+
+          </div><!-- /.card--glass -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         D) LEAD TRACKER EXAMPLE
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Lead tracker table with responsive scroll wrapper -->
+    <section id="demo-tracker" class="section">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">Lead Tracking</span>
+          </div>
+          <h2>Every lead, tracked with a next step</h2>
+          <p class="text-muted">
+            No more sticky notes or "I'll follow up later." Every lead lives in a shared sheet
+            with a status, so nothing slips through.
+          </p>
+        </div>
+
+        <div class="reveal" style="--reveal-delay: 80ms;">
+          <div class="tracker-wrap">
+            <table class="tracker" aria-label="Sample HVAC lead tracker">
+              <caption>
+                Sample data — fictional leads for demonstration purposes only.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Service</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Urgency</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Jun 6</td>
+                  <td>
+                    <div class="tracker__name">Sarah M.</div>
+                  </td>
+                  <td>
+                    <div>AC not cooling</div>
+                    <div class="tracker__service">System runs, house won't cool</div>
+                  </td>
+                  <td>New Albany</td>
+                  <td><span class="text-warn">Emergency</span></td>
+                  <td><span class="status-pill status-pill--estimate">Estimate Scheduled</span></td>
+                </tr>
+                <tr>
+                  <td>Jun 5</td>
+                  <td>
+                    <div class="tracker__name">Marcus T.</div>
+                  </td>
+                  <td>
+                    <div>Furnace not starting</div>
+                    <div class="tracker__service">No heat, won't ignite</div>
+                  </td>
+                  <td>Jeffersonville</td>
+                  <td><span class="text-warn">This week</span></td>
+                  <td><span class="status-pill status-pill--booked">Booked</span></td>
+                </tr>
+                <tr>
+                  <td>Jun 5</td>
+                  <td>
+                    <div class="tracker__name">Denise R.</div>
+                  </td>
+                  <td>
+                    <div>Annual maintenance</div>
+                    <div class="tracker__service">Summer tune-up request</div>
+                  </td>
+                  <td>Clarksville</td>
+                  <td><span class="text-muted">Flexible</span></td>
+                  <td><span class="status-pill status-pill--contacted">Contacted</span></td>
+                </tr>
+                <tr>
+                  <td>Jun 4</td>
+                  <td>
+                    <div class="tracker__name">Tom &amp; Pam H.</div>
+                  </td>
+                  <td>
+                    <div>Indoor air quality</div>
+                    <div class="tracker__service">Allergies, asking about UV system</div>
+                  </td>
+                  <td>Sellersburg</td>
+                  <td><span class="text-muted">Flexible</span></td>
+                  <td><span class="status-pill status-pill--new">New</span></td>
+                </tr>
+                <tr>
+                  <td>Jun 3</td>
+                  <td>
+                    <div class="tracker__name">Kevin W.</div>
+                  </td>
+                  <td>
+                    <div>AC repair</div>
+                    <div class="tracker__service">Ice on outdoor unit</div>
+                  </td>
+                  <td>Charlestown</td>
+                  <td><span class="text-warn">Emergency</span></td>
+                  <td><span class="status-pill status-pill--no-response">No Response</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div><!-- /.tracker-wrap -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         E) MISSED-CALL TEXT EXAMPLE
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Phone frame with SMS auto-reply conversation mockup -->
+    <section id="demo-sms" class="section section--alt">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">Missed-Call Auto-Reply</span>
+          </div>
+          <h2>Missed a call? They still get a next step.</h2>
+          <p class="text-muted">
+            Instead of silence, every missed call triggers an instant text — so the lead
+            stays warm while you finish the job you're on.
+          </p>
+        </div>
+
+        <div class="phone-section__inner reveal" style="--reveal-delay: 60ms;">
+
+          <!-- Phone frame -->
+          <div class="phone-frame" role="img" aria-label="Phone screen showing missed-call auto-reply conversation">
+
+            <!-- Status bar -->
+            <div class="phone-status-bar">
+              <span class="phone-carrier">Riverbend</span>
+              <span class="phone-notch" style="position:static; display:inline-block; width:44px; height:10px; background:#000; border-radius:0 0 8px 8px; vertical-align:middle;"></span>
+              <div class="phone-icons">
+                <i data-lucide="wifi" style="width:11px;height:11px;" aria-hidden="true"></i>
+                <i data-lucide="battery" style="width:11px;height:11px;" aria-hidden="true"></i>
+              </div>
+            </div>
+
+            <!-- Message thread header -->
+            <div class="phone-msg-header">
+              <div class="phone-msg-header__name">(812) 555-0178</div>
+              <div class="phone-msg-header__sub">Riverbend Heating &amp; Air</div>
+            </div>
+
+            <!-- SMS conversation -->
+            <div class="phone-screen" role="list" aria-label="SMS conversation">
+
+              <div class="sms-system" role="listitem">
+                Missed call from (812) 555-0178
+              </div>
+
+              <div class="sms-bubble sms-bubble--out" role="listitem">
+                Hi, sorry we missed your call — this is Riverbend Heating &amp; Air.
+                What can we help with? Reply here or request a quote:
+                <strong style="display:block; margin-top:4px; color: #7dd3fc;">[quote link]</strong>
+              </div>
+
+              <div class="sms-bubble sms-bubble--in" role="listitem">
+                My AC stopped cooling last night. Can someone come out today?
+              </div>
+
+              <div class="sms-bubble sms-bubble--out" role="listitem">
+                Yes — sending you a quick form so we can get details and photos.
+                We'll follow up to schedule.
+              </div>
+
+            </div><!-- /.phone-screen -->
+
+          </div><!-- /.phone-frame -->
+
+          <!-- Caption text -->
+          <div class="phone-caption">
+            <div class="icon-chip icon-chip--green icon-chip--lg" style="margin-bottom: 16px;">
+              <i data-lucide="message-square-text"></i>
+            </div>
+            <h3>No missed lead left behind</h3>
+            <p>
+              When a call goes to voicemail, your system fires an auto-reply text within
+              seconds — keeping the conversation alive and routing the lead to your
+              quote form before they call a competitor.
+            </p>
+            <p>
+              Customers get an immediate response. You get a warm lead with details
+              and photos waiting in your tracker when you're free.
+            </p>
+            <div class="pill pill--green" style="margin-top: 8px;">
+              <i data-lucide="zap"></i>
+              Instant — no manual follow-up needed
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         F) GOOGLE PROFILE CLEANUP CHECKLIST
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Before/After Google Business Profile checklist -->
+    <section id="demo-gbp" class="section">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">Google Business Profile</span>
+          </div>
+          <h2>A cleaned-up profile that earns trust fast</h2>
+          <p class="text-muted">
+            Most HVAC profiles are half-finished. I complete every field so the business
+            looks professional — and gets found for the right searches.
+          </p>
+        </div>
+
+        <div class="checklist-grid reveal" style="--reveal-delay: 60ms;">
+
+          <!-- BEFORE column -->
+          <div class="card checklist-col">
+            <div class="checklist-col__label checklist-col__label--before">
+              <i data-lucide="x-circle" style="width:18px;height:18px;" aria-hidden="true"></i>
+              Before
+            </div>
+
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--x">
+                <i data-lucide="x"></i>
+              </div>
+              <span>Missing service descriptions</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--x">
+                <i data-lucide="x"></i>
+              </div>
+              <span>Outdated or incomplete hours</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--x">
+                <i data-lucide="x"></i>
+              </div>
+              <span>Few or no photos</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--x">
+                <i data-lucide="x"></i>
+              </div>
+              <span>No quote link in profile</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--x">
+                <i data-lucide="x"></i>
+              </div>
+              <span>No system for requesting reviews</span>
+            </div>
+          </div>
+
+          <!-- AFTER column -->
+          <div class="card checklist-col" style="border-color: rgba(34,197,94,0.25);">
+            <div class="checklist-col__label checklist-col__label--after">
+              <i data-lucide="check-circle-2" style="width:18px;height:18px;" aria-hidden="true"></i>
+              After
+            </div>
+
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--check">
+                <i data-lucide="check"></i>
+              </div>
+              <span>Services &amp; descriptions complete</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--check">
+                <i data-lucide="check"></i>
+              </div>
+              <span>Hours &amp; holiday hours set</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--check">
+                <i data-lucide="check"></i>
+              </div>
+              <span>Photos &amp; logo added</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--check">
+                <i data-lucide="check"></i>
+              </div>
+              <span>Quote link added to profile</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon checklist-icon--check">
+                <i data-lucide="check"></i>
+              </div>
+              <span>Review request templates flowing</span>
+            </div>
+          </div>
+
+        </div><!-- /.checklist-grid -->
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         G) HANDOFF PREVIEW
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Handoff document preview card -->
+    <section id="demo-handoff" class="section section--alt">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">What You Receive</span>
+          </div>
+          <h2>Everything handed off, nothing left half-done</h2>
+          <p class="text-muted">
+            When the build is complete, you get every piece organized, documented, and ready
+            to run — no relying on me to operate it.
+          </p>
+        </div>
+
+        <div class="max-840 mx-auto reveal" style="--reveal-delay: 60ms;">
+          <div class="card card--glass">
+
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
+              <div class="icon-chip icon-chip--cyan icon-chip--lg">
+                <i data-lucide="package-check"></i>
+              </div>
+              <div>
+                <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;">
+                  What you get at handoff
+                </div>
+                <div class="text-sm text-muted">Delivered as a simple, shareable doc</div>
+              </div>
+            </div>
+
+            <div class="handoff-list">
+
+              <div class="handoff-item">
+                <i data-lucide="globe" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Website / landing page</strong>
+                  <span>Clean, mobile-first HVAC landing page with quote form — yours to own</span>
+                </div>
+              </div>
+
+              <div class="handoff-item">
+                <i data-lucide="clipboard-list" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Quote form link</strong>
+                  <span>Standalone form URL you can share anywhere — text, email, Google profile</span>
+                </div>
+              </div>
+
+              <div class="handoff-item">
+                <i data-lucide="table-2" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Lead tracking sheet</strong>
+                  <span>Google Sheet pre-configured with columns, status pills, and instructions</span>
+                </div>
+              </div>
+
+              <div class="handoff-item">
+                <i data-lucide="star" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Review request templates</strong>
+                  <span>Text and email templates to send after a job is complete — copy/paste ready</span>
+                </div>
+              </div>
+
+              <div class="handoff-item">
+                <i data-lucide="message-square-reply" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Missed-call / after-hours templates</strong>
+                  <span>Auto-reply message templates for your phone system or text service</span>
+                </div>
+              </div>
+
+              <div class="handoff-item">
+                <i data-lucide="map-pin" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Google Business Profile cleanup notes</strong>
+                  <span>Step-by-step notes on every field updated and why</span>
+                </div>
+              </div>
+
+              <div class="handoff-item">
+                <i data-lucide="file-text" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Simple handoff doc</strong>
+                  <span>One document with every link, login location, and "how to use it" note</span>
+                </div>
+              </div>
+
+              <div class="handoff-item">
+                <i data-lucide="headphones" aria-hidden="true"></i>
+                <div class="handoff-item__text">
+                  <strong>Optional monthly support</strong>
+                  <span>Keep me on to update the form, track leads, and make improvements over time</span>
+                </div>
+              </div>
+
+            </div><!-- /.handoff-list -->
+
+          </div><!-- /.card--glass -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         H) FINAL CTA
+         ══════════════════════════════════════════════════════ -->
+    <!-- EDIT: Final call-to-action band -->
+    <section id="demo-cta" class="section">
+      <div class="container">
+        <div class="card card--glass demo-cta-card reveal">
+          <div class="icon-chip icon-chip--cyan icon-chip--lg" style="margin: 0 auto 20px;">
+            <i data-lucide="zap"></i>
+          </div>
+          <h2>Want this for your HVAC business?</h2>
+          <p>
+            I'll start with a free audit and show you where your leads are leaking.
+            No commitment, no pitch deck — just an honest look at what's costing you jobs.
+          </p>
+          <a href="audit.html" class="btn btn--primary btn--lg">
+            Request Free Audit
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__grid">
+
+        <div class="site-footer__brand">
+          <a href="index.html" class="brand">
+            <img src="assets/eai-mark.png" alt="" class="brand__logo" width="40" height="28" />
+            <span class="brand__name" data-config="brandName">ElipsionAI</span>
+          </a>
+          <p class="site-footer__desc">
+            A done-for-you lead-capture system built specifically for HVAC contractors
+            who are tired of missing calls and losing jobs to competitors.
+          </p>
+        </div>
+
+        <div class="site-footer__col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="demo.html">Demo</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+            <li><a href="audit.html">Free Audit</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col site-footer__contact">
+          <h4>Contact</h4>
+          <p>
+            <i data-lucide="mail"></i>
+            <a href="mailto:Jacob.Briggs@ElipsionGroup.com" data-config="email">Jacob.Briggs@ElipsionGroup.com</a>
+          </p>
+          <p>
+            <i data-lucide="phone"></i>
+            <a href="tel:+18124898057" data-config="phone">(812) 489-8057</a>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="site-footer__bottom">
+        <p class="site-footer__disclaimer">
+          This service improves lead-capture systems but does not guarantee specific
+          rankings, leads, sales, or revenue.
+        </p>
+        <p class="site-footer__copy">
+          &copy; <span id="footer-year"></span>
+          <span data-config="brandName">ElipsionAI</span>. All rights reserved.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    var el = document.getElementById('footer-year');
+    if (el) el.textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Lucide icons (pinned v1.17.0 with SRI) -->
+  <script
+    src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.min.js"
+    integrity="sha384-bdZtphetAEBgkGZvhZXOFDWc55tHGLqaSo1f4qZtgvEiolEBqlJ9u6FTk+CoLfj0"
+    crossorigin="anonymous"
+  ></script>
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

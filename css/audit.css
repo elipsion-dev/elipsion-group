@@ -1,0 +1,155 @@
+/* ============================================================
+   audit.css — Dedicated Free Audit Page
+   ============================================================ */
+
+.audit-page {
+  padding: clamp(118px, 13vw, 164px) 0 clamp(72px, 9vw, 116px);
+}
+
+.audit-page__intro {
+  max-width:    760px;
+  margin-bottom: clamp(36px, 5vw, 58px);
+}
+
+.audit-page__intro h1 {
+  margin-top:    18px;
+  max-width:     14ch;
+  font-size:     clamp(2.5rem, 5.5vw, 4.5rem);
+  letter-spacing: -0.045em;
+}
+
+.audit-page__intro p {
+  margin-top:  20px;
+  color:       var(--muted);
+  font-size:   clamp(1rem, 1.5vw, 1.15rem);
+  max-width:   62ch;
+}
+
+.audit-page__layout {
+  display:               grid;
+  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
+  gap:                   clamp(28px, 5vw, 64px);
+  align-items:           start;
+}
+
+.audit-page__aside {
+  position: sticky;
+  top:      108px;
+}
+
+.audit-page__aside h2 {
+  font-size: clamp(1.45rem, 2.7vw, 2.15rem);
+}
+
+.audit-page__aside > p {
+  margin-top: 12px;
+  color:      var(--muted);
+  font-size:  0.92rem;
+}
+
+.audit-checklist {
+  display:        flex;
+  flex-direction: column;
+  gap:            15px;
+  margin-top:     28px;
+}
+
+.audit-checklist__item {
+  display:     flex;
+  align-items: flex-start;
+  gap:         12px;
+}
+
+.audit-checklist__icon {
+  display:         grid;
+  place-items:     center;
+  width:           34px;
+  height:          34px;
+  flex-shrink:     0;
+  color:           var(--accent);
+  background:      rgba(56, 189, 248, 0.1);
+  border:          1px solid rgba(56, 189, 248, 0.22);
+  border-radius:   10px;
+}
+
+.audit-checklist__icon .lucide {
+  width:  16px;
+  height: 16px;
+}
+
+.audit-checklist__item strong,
+.audit-checklist__item span {
+  display: block;
+}
+
+.audit-checklist__item strong {
+  font-family: var(--font-display);
+  font-size:   0.9rem;
+}
+
+.audit-checklist__item span {
+  margin-top:  3px;
+  color:       var(--muted);
+  font-size:   0.78rem;
+  line-height: 1.5;
+}
+
+.audit-page__contact {
+  margin-top:    30px;
+  padding-top:   22px;
+  border-top:    1px solid var(--border);
+  color:         var(--muted);
+  font-size:     0.8rem;
+  line-height:   1.6;
+}
+
+.audit-page__contact a {
+  color: var(--accent);
+}
+
+.audit__card {
+  padding: clamp(24px, 4vw, 44px);
+}
+
+.audit__card-head {
+  margin-bottom: 26px;
+}
+
+.audit__card-head h2 {
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+}
+
+.audit__card-head p {
+  margin-top: 7px;
+  color:      var(--muted);
+  font-size:  0.85rem;
+}
+
+@media (max-width: 860px) {
+  .audit-page__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-page__aside {
+    position: static;
+  }
+
+  .audit-checklist {
+    display:               grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .audit-page {
+    padding-top: 102px;
+  }
+
+  .audit-page__intro h1 {
+    font-size: 2.55rem;
+  }
+
+  .audit-checklist {
+    grid-template-columns: 1fr;
+  }
+}

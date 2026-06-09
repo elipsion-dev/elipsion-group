@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Page-specific: edit per page ─────────────────────── -->
+  <title>Lead-Capture Systems for HVAC Contractors | ElipsionAI</title>
+  <meta name="description"
+    content="I set up simple websites, quote forms, missed-call follow-up, review requests, and lead tracking for HVAC companies — so you stop losing quote requests when you're busy or it's after hours." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lead-Capture Systems for HVAC Contractors | ElipsionAI" />
+  <meta property="og:description"
+    content="I set up simple websites, quote forms, missed-call follow-up, review requests, and lead tracking for HVAC companies — so you stop losing quote requests when you're busy or it's after hours." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.elipsiongroup.com/" />
+  <!-- <meta property="og:image" content="assets/og-image.jpg" /> -->
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lead-Capture Systems for HVAC Contractors | ElipsionAI" />
+  <meta name="twitter:description"
+    content="I set up simple websites, quote forms, missed-call follow-up, review requests, and lead tracking for HVAC companies — so you stop losing quote requests when you're busy or it's after hours." />
+  <!-- ─────────────────────────────────────────────────────── -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Favicon (replace with real asset) -->
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+
+  <!-- Design System CSS (load in this order) -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <!-- Page-specific CSS -->
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+
+<body>
+
+  <!-- Aurora background (place once, immediately after <body>) -->
+  <div class="bg-aurora"></div>
+
+  <!-- ── HEADER ───────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+
+      <!-- Brand / Logo -->
+      <a href="index.html" class="brand" aria-label="ElipsionAI home">
+        <img src="assets/eai-mark.png" alt="" class="brand__logo" width="46" height="32" />
+        <span class="brand__name" data-config="brandName">ElipsionAI</span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <nav aria-label="Main navigation">
+        <ul class="nav__links">
+          <li><a href="index.html" class="is-active" aria-current="page">Home</a></li>
+          <li><a href="demo.html">Demo</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </nav>
+
+      <!-- Desktop CTA -->
+      <div class="nav__cta">
+        <a href="audit.html" class="btn btn--primary btn--sm" data-config-href="auditUrl">
+          Request Free Audit
+          <i data-lucide="arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- Mobile hamburger (icon swapped by JS) -->
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <i data-lucide="menu"></i>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ── MOBILE MENU ──────────────────────────────────────── -->
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+    <ul class="mobile-menu__links">
+      <li><a href="index.html" class="is-active" aria-current="page">Home</a></li>
+      <li><a href="demo.html">Demo</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+    <div class="mobile-menu__cta">
+      <a href="audit.html" class="btn btn--primary" data-config-href="auditUrl">
+        Request Free Audit
+        <i data-lucide="arrow-right"></i>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── MAIN ─────────────────────────────────────────────── -->
+  <main>
+
+    <!-- ====================================================
+         SECTION 1: HERO
+         Full-width app window panel with pipeline timeline
+         ==================================================== -->
+    <section id="home" class="hero" aria-label="Hero">
+      <div class="container">
+
+        <!-- ── Outer app-window panel ──────────────────────── -->
+        <div class="hero-dash animate-fade-in-up" style="--anim-delay: 0.1s">
+
+          <!-- Left icon rail (decorative, hidden <900px) -->
+          <div class="hero-dash__rail" aria-hidden="true">
+            <!-- Brand glyph -->
+            <div class="hero-dash__rail-brand">
+              <img src="assets/eai-mark.png" alt="" width="40" height="28" />
+            </div>
+
+            <!-- Nav icons -->
+            <div class="hero-dash__rail-icons">
+              <div class="hero-dash__rail-icon is-active">
+                <i data-lucide="layout-dashboard"></i>
+              </div>
+              <div class="hero-dash__rail-icon">
+                <i data-lucide="bar-chart-3"></i>
+              </div>
+              <div class="hero-dash__rail-icon">
+                <i data-lucide="users"></i>
+              </div>
+              <div class="hero-dash__rail-icon">
+                <i data-lucide="message-square"></i>
+              </div>
+              <div class="hero-dash__rail-icon">
+                <i data-lucide="calendar"></i>
+              </div>
+              <div class="hero-dash__rail-icon">
+                <i data-lucide="star"></i>
+              </div>
+            </div>
+
+            <!-- Settings pinned to bottom -->
+            <div class="hero-dash__rail-icon hero-dash__rail-settings">
+              <i data-lucide="settings"></i>
+            </div>
+          </div><!-- /.hero-dash__rail -->
+
+          <!-- Main content area -->
+          <div class="hero-dash__main">
+
+            <!-- ── TOP ROW: copy left + notifications right ── -->
+            <div class="hero-dash__top-row">
+
+              <!-- Left: headline + buttons -->
+              <div class="hero-dash__copy">
+                <!-- Brand chip -->
+                <div class="hero-dash__brand-chip">
+                  <img src="assets/eai-mark.png" alt="" width="26" height="18" class="hero-dash__brand-chip-logo" />
+                  <span class="hero-dash__brand-name" data-config="brandName">ElipsionAI</span>
+                  <span class="hero-dash__lead-badge">LEAD SYSTEM</span>
+                </div>
+
+                <!-- ONE h1 on the page -->
+                <h1 class="hero__headline">
+                  Turn Missed Calls<br>
+                  <span class="text-gradient">Into Quote Requests.</span>
+                </h1>
+
+                <p class="hero__subheadline">
+                  I build simple lead-capture systems for local HVAC contractors so you never lose another quote
+                  request.
+                </p>
+
+                <div class="hero__buttons">
+                  <a href="audit.html" class="btn btn--primary btn--lg" data-config-href="auditUrl">
+                    Request Free Audit
+                    <i data-lucide="arrow-right"></i>
+                  </a>
+                  <a href="#how-it-works" class="btn btn--secondary btn--lg">
+                    <i data-lucide="chevron-right"></i>
+                    See How It Works
+                  </a>
+                </div>
+              </div><!-- /.hero-dash__copy -->
+
+              <!-- Right: floating notification cards -->
+              <div class="hero-dash__notifs" aria-hidden="true">
+
+                <!-- Notif A: orange — Missed Call -->
+                <div class="hero-notif hero-notif--a animate-slide-notif" style="--anim-delay: 0.5s">
+                  <div class="hero-notif__card animate-float" style="--anim-delay: 1.0s">
+                    <div class="hero-notif__ts hero-notif__ts--orange">Just now</div>
+                    <div class="hero-notif__body">
+                      <div class="icon-chip icon-chip--orange hero-notif__icon-chip">
+                        <i data-lucide="phone-missed"></i>
+                      </div>
+                      <div class="hero-notif__text">
+                        <strong>New Missed Call</strong>
+                        <span>(812) 555-0198</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Notif B: green — Quote Form -->
+                <div class="hero-notif hero-notif--b animate-slide-notif" style="--anim-delay: 1.0s">
+                  <div class="hero-notif__card animate-float-slow" style="--anim-delay: 0.4s">
+                    <div class="hero-notif__ts hero-notif__ts--green">2m ago</div>
+                    <div class="hero-notif__body">
+                      <div class="icon-chip icon-chip--green hero-notif__icon-chip">
+                        <i data-lucide="message-square"></i>
+                      </div>
+                      <div class="hero-notif__text">
+                        <strong>Quote Form Submitted</strong>
+                        <span>AC not cooling</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div><!-- /.hero-dash__notifs -->
+
+            </div><!-- /.hero-dash__top-row -->
+
+            <!-- ── PIPELINE ───────────────────────────────── -->
+            <div class="pipeline" aria-label="Lead Capture Pipeline (decorative)">
+
+              <!-- Pipeline header -->
+              <div class="pipeline__header">
+                <i data-lucide="activity" aria-hidden="true"></i>
+                <span class="pipeline__title">Lead Capture Pipeline</span>
+              </div>
+
+              <!-- Single horizontal row — scrolls sideways on narrow screens -->
+              <div class="pipeline__scroll-wrap">
+                <div class="pipeline__cards">
+
+                  <!-- Stage 1: Missed Call (orange) -->
+                  <div class="pipeline__card pipeline__card--orange">
+                    <span class="pipeline__card-num" aria-hidden="true">1</span>
+                    <div class="pipeline__card-icon pipeline__card-icon--orange">
+                      <i data-lucide="phone" aria-hidden="true"></i>
+                    </div>
+                    <div class="pipeline__card-name">Missed Call</div>
+                    <div class="pipeline__card-desc">Customer calls while you're busy or away.</div>
+                    <span class="pipeline__card-time pipeline__card-time--orange">12:42 PM</span>
+                  </div>
+
+                  <!-- Arrow 1→2 (orange) -->
+                  <div class="pipeline__arrow pipeline__arrow--orange" aria-hidden="true">
+                    <i data-lucide="chevron-right"></i>
+                  </div>
+
+                  <!-- Stage 2: Auto Reply Sent (cyan) -->
+                  <div class="pipeline__card pipeline__card--cyan">
+                    <span class="pipeline__card-num" aria-hidden="true">2</span>
+                    <div class="pipeline__card-icon pipeline__card-icon--cyan">
+                      <i data-lucide="message-square" aria-hidden="true"></i>
+                    </div>
+                    <div class="pipeline__card-name">Auto Reply Sent</div>
+                    <div class="pipeline__card-desc">We text back instantly with a friendly auto reply.</div>
+                    <span class="pipeline__card-time pipeline__card-time--cyan">12:42 PM</span>
+                  </div>
+
+                  <!-- Arrow 2→3 (cyan) -->
+                  <div class="pipeline__arrow pipeline__arrow--cyan" aria-hidden="true">
+                    <i data-lucide="chevron-right"></i>
+                  </div>
+
+                  <!-- Stage 3: Quote Form Submitted (cyan) -->
+                  <div class="pipeline__card pipeline__card--cyan">
+                    <span class="pipeline__card-num" aria-hidden="true">3</span>
+                    <div class="pipeline__card-icon pipeline__card-icon--cyan">
+                      <i data-lucide="clipboard-list" aria-hidden="true"></i>
+                    </div>
+                    <div class="pipeline__card-name">Quote Form Submitted</div>
+                    <div class="pipeline__card-desc">Customer clicks the link and submits their request.</div>
+                    <span class="pipeline__card-time pipeline__card-time--cyan">12:45 PM</span>
+                  </div>
+
+                  <!-- Arrow 3→4 (cyan) -->
+                  <div class="pipeline__arrow pipeline__arrow--cyan" aria-hidden="true">
+                    <i data-lucide="chevron-right"></i>
+                  </div>
+
+                  <!-- Stage 4: New Lead Added (green) -->
+                  <div class="pipeline__card pipeline__card--green">
+                    <span class="pipeline__card-num" aria-hidden="true">4</span>
+                    <div class="pipeline__card-icon pipeline__card-icon--green">
+                      <i data-lucide="user-plus" aria-hidden="true"></i>
+                    </div>
+                    <div class="pipeline__card-name">New Lead Added</div>
+                    <div class="pipeline__card-desc">Lead is added to your tracker and organized automatically.</div>
+                    <span class="pipeline__card-time pipeline__card-time--green">12:45 PM</span>
+                  </div>
+
+                  <!-- Arrow 4→5 (green) -->
+                  <div class="pipeline__arrow pipeline__arrow--green" aria-hidden="true">
+                    <i data-lucide="chevron-right"></i>
+                  </div>
+
+                  <!-- Stage 5: Estimate Scheduled (green) -->
+                  <div class="pipeline__card pipeline__card--green">
+                    <span class="pipeline__card-num" aria-hidden="true">5</span>
+                    <div class="pipeline__card-icon pipeline__card-icon--green">
+                      <i data-lucide="calendar-check" aria-hidden="true"></i>
+                    </div>
+                    <div class="pipeline__card-name">Estimate Scheduled</div>
+                    <div class="pipeline__card-desc">Follow up, schedule, and move the job forward.</div>
+                    <span class="pipeline__card-time pipeline__card-time--green">1:15 PM</span>
+                  </div>
+
+                  <!-- Arrow 5→6 (green) -->
+                  <div class="pipeline__arrow pipeline__arrow--green" aria-hidden="true">
+                    <i data-lucide="chevron-right"></i>
+                  </div>
+
+                  <!-- Stage 6: Review Request Ready (amber) -->
+                  <div class="pipeline__card pipeline__card--amber">
+                    <span class="pipeline__card-num" aria-hidden="true">6</span>
+                    <div class="pipeline__card-icon pipeline__card-icon--amber">
+                      <i data-lucide="star" aria-hidden="true"></i>
+                    </div>
+                    <div class="pipeline__card-name">Review Request Ready</div>
+                    <div class="pipeline__card-desc">After the job, a review request is sent automatically.</div>
+                    <span class="pipeline__card-time pipeline__card-time--amber">After Job</span>
+                  </div>
+
+                </div><!-- /.pipeline__cards -->
+              </div><!-- /.pipeline__scroll-wrap -->
+
+            </div><!-- /.pipeline -->
+
+            <!-- ── STAT TILES ─────────────────────────────── -->
+            <!-- EDIT: Stat numbers (sample/demo data in the mockup) -->
+            <div class="stat-tiles" aria-label="Sample pipeline stats (decorative)">
+
+              <!-- Tile 1 -->
+              <div class="stat-tile">
+                <div class="stat-tile__chip stat-tile__chip--cyan">
+                  <i data-lucide="phone" aria-hidden="true"></i>
+                </div>
+                <div class="stat-tile__info">
+                  <div class="stat-tile__number">24</div>
+                  <div class="stat-tile__label">Missed Calls Captured</div>
+                </div>
+                <svg class="stat-tile__sparkline" viewBox="0 0 60 24" aria-hidden="true">
+                  <polyline points="0,18 10,14 20,20 30,10 40,16 50,8 60,12" fill="none" stroke="#38bdf8"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+                </svg>
+              </div>
+
+              <!-- Tile 2 -->
+              <div class="stat-tile">
+                <div class="stat-tile__chip stat-tile__chip--cyan">
+                  <i data-lucide="message-square" aria-hidden="true"></i>
+                </div>
+                <div class="stat-tile__info">
+                  <div class="stat-tile__number">17</div>
+                  <div class="stat-tile__label">Auto Replies Sent</div>
+                </div>
+                <svg class="stat-tile__sparkline" viewBox="0 0 60 24" aria-hidden="true">
+                  <polyline points="0,20 10,16 20,18 30,12 40,14 50,10 60,8" fill="none" stroke="#38bdf8"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+                </svg>
+              </div>
+
+              <!-- Tile 3 -->
+              <div class="stat-tile">
+                <div class="stat-tile__chip stat-tile__chip--cyan">
+                  <i data-lucide="clipboard-list" aria-hidden="true"></i>
+                </div>
+                <div class="stat-tile__info">
+                  <div class="stat-tile__number">12</div>
+                  <div class="stat-tile__label">Quote Requests Submitted</div>
+                </div>
+                <svg class="stat-tile__sparkline" viewBox="0 0 60 24" aria-hidden="true">
+                  <polyline points="0,22 10,18 20,22 30,14 40,18 50,12 60,10" fill="none" stroke="#38bdf8"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+                </svg>
+              </div>
+
+              <!-- Tile 4 -->
+              <div class="stat-tile">
+                <div class="stat-tile__chip stat-tile__chip--green">
+                  <i data-lucide="user-plus" aria-hidden="true"></i>
+                </div>
+                <div class="stat-tile__info">
+                  <div class="stat-tile__number">9</div>
+                  <div class="stat-tile__label">New Leads Added</div>
+                </div>
+                <svg class="stat-tile__sparkline" viewBox="0 0 60 24" aria-hidden="true">
+                  <polyline points="0,20 10,16 20,18 30,12 40,10 50,8 60,6" fill="none" stroke="#22c55e"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+                </svg>
+              </div>
+
+              <!-- Tile 5 -->
+              <div class="stat-tile">
+                <div class="stat-tile__chip stat-tile__chip--green">
+                  <i data-lucide="calendar-check" aria-hidden="true"></i>
+                </div>
+                <div class="stat-tile__info">
+                  <div class="stat-tile__number">6</div>
+                  <div class="stat-tile__label">Estimates Scheduled</div>
+                </div>
+                <svg class="stat-tile__sparkline" viewBox="0 0 60 24" aria-hidden="true">
+                  <polyline points="0,22 10,18 20,20 30,16 40,14 50,12 60,8" fill="none" stroke="#22c55e"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+                </svg>
+              </div>
+
+              <!-- Tile 6 -->
+              <div class="stat-tile">
+                <div class="stat-tile__chip stat-tile__chip--amber">
+                  <i data-lucide="star" aria-hidden="true"></i>
+                </div>
+                <div class="stat-tile__info">
+                  <div class="stat-tile__number">4</div>
+                  <div class="stat-tile__label">Review Requests Sent</div>
+                </div>
+                <svg class="stat-tile__sparkline" viewBox="0 0 60 24" aria-hidden="true">
+                  <polyline points="0,22 10,20 20,18 30,16 40,14 50,12 60,10" fill="none" stroke="#fbbf24"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+                </svg>
+              </div>
+
+            </div><!-- /.stat-tiles -->
+
+            <!-- ── BOTTOM CTA STRIP ───────────────────────── -->
+            <div class="hero-cta-strip">
+              <div class="hero-cta-strip__left">
+                <div class="icon-chip icon-chip--amber hero-cta-strip__zap">
+                  <i data-lucide="zap"></i>
+                </div>
+                <div class="hero-cta-strip__text">
+                  <strong>A better system. More leads. More jobs. Less stress.</strong>
+                  <span>I handle the setup so you can focus on what you do best.</span>
+                </div>
+              </div>
+              <a href="audit.html" class="btn btn--primary hero-cta-strip__btn" data-config-href="auditUrl">
+                Request Free Audit
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div><!-- /.hero-cta-strip -->
+
+          </div><!-- /.hero-dash__main -->
+
+        </div><!-- /.hero-dash -->
+
+      </div><!-- /.container -->
+    </section>
+
+
+    <!-- ====================================================
+         SECTION 2: PROBLEM — WHAT I FIX
+         EDIT: Problem card headlines, descriptions
+         ==================================================== -->
+    <section id="what-i-fix" class="section">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">What I fix</span>
+          </div>
+          <!-- EDIT: Section headline -->
+          <h2>Most HVAC businesses don't lose leads because they're bad at the work. They lose them because the
+            follow-up system is weak.</h2>
+        </div>
+
+        <div class="grid grid-3">
+
+          <!-- EDIT: Problem card 1 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 0ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--orange">
+                <i data-lucide="phone"></i>
+              </div>
+            </div>
+            <h3>Missed calls</h3>
+            <p class="text-muted">Customers call while you're on a job, driving, or helping someone else. If they don't
+              get a quick path forward, they may call the next company.</p>
+          </div>
+
+          <!-- EDIT: Problem card 2 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 100ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--cyan">
+                <i data-lucide="clipboard"></i>
+              </div>
+            </div>
+            <h3>No quote form</h3>
+            <p class="text-muted">A phone number alone does not capture after-hours visitors. A simple form lets
+              customers explain the job, upload photos, and request help anytime.</p>
+          </div>
+
+          <!-- EDIT: Problem card 3 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 200ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--cyan">
+                <i data-lucide="map-pin"></i>
+              </div>
+            </div>
+            <h3>Weak Google / profile presence</h3>
+            <p class="text-muted">Incomplete services, outdated hours, missing photos, and weak descriptions can make a
+              good business look less trustworthy online.</p>
+          </div>
+
+          <!-- EDIT: Problem card 4 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 300ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--amber">
+                <i data-lucide="star"></i>
+              </div>
+            </div>
+            <h3>No review process</h3>
+            <p class="text-muted">Happy customers often do not leave reviews unless they are asked at the right time
+              with a simple link.</p>
+          </div>
+
+          <!-- EDIT: Problem card 5 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 400ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--violet">
+                <i data-lucide="list-checks"></i>
+              </div>
+            </div>
+            <h3>No lead tracker</h3>
+            <p class="text-muted">When leads live in texts, voicemails, notes, and memory, follow-ups get missed.</p>
+          </div>
+
+        </div><!-- /.grid -->
+
+      </div><!-- /.container -->
+    </section>
+
+
+    <!-- ====================================================
+         SECTION 3: WHAT I INSTALL
+         EDIT: Feature card headlines, descriptions
+         ==================================================== -->
+    <section id="what-i-install" class="section section--alt">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">The system</span>
+          </div>
+          <!-- EDIT: Section headline and subhead -->
+          <h2>A simple lead-capture system, installed for you.</h2>
+          <p class="text-muted">Everything a local HVAC business needs to stop losing quote requests and start keeping
+            up with leads.</p>
+        </div>
+
+        <div class="grid grid-3">
+
+          <!-- EDIT: Feature card 1 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 0ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--cyan icon-chip--lg">
+                <i data-lucide="map-pin"></i>
+              </div>
+            </div>
+            <h3>Google Business Profile Cleanup</h3>
+            <p class="text-muted">Services, description, hours, photos, quote links, review process, and basic profile
+              improvements.</p>
+          </div>
+
+          <!-- EDIT: Feature card 2 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 100ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--cyan icon-chip--lg">
+                <i data-lucide="monitor"></i>
+              </div>
+            </div>
+            <h3>1-Page Website / Landing Page</h3>
+            <p class="text-muted">A clean, mobile-friendly page built to turn visitors into calls and quote requests.
+            </p>
+          </div>
+
+          <!-- EDIT: Feature card 3 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 200ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--green icon-chip--lg">
+                <i data-lucide="clipboard-list"></i>
+              </div>
+            </div>
+            <h3>Request-a-Quote Form</h3>
+            <p class="text-muted">Customers can describe the job, share contact info, upload photos, and choose how they
+              want to be contacted.</p>
+          </div>
+
+          <!-- EDIT: Feature card 4 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 300ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--orange icon-chip--lg">
+                <i data-lucide="phone-call"></i>
+              </div>
+            </div>
+            <h3>Missed-Call / After-Hours Follow-Up</h3>
+            <p class="text-muted">Templates or compatible workflow setup so missed callers get a fast next step instead
+              of silence.</p>
+          </div>
+
+          <!-- EDIT: Feature card 5 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 400ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--amber icon-chip--lg">
+                <i data-lucide="star"></i>
+              </div>
+            </div>
+            <h3>Review Request System</h3>
+            <p class="text-muted">Simple text and email templates that make it easier to ask happy customers for Google
+              reviews.</p>
+          </div>
+
+          <!-- EDIT: Feature card 6 -->
+          <div class="card card--hover reveal" style="--reveal-delay: 500ms">
+            <div class="card__header">
+              <div class="icon-chip icon-chip--violet icon-chip--lg">
+                <i data-lucide="table"></i>
+              </div>
+            </div>
+            <h3>Lead Tracking Sheet</h3>
+            <p class="text-muted">A basic tracker for new leads, follow-ups, estimates, booked jobs, and no-response
+              leads.</p>
+          </div>
+
+        </div><!-- /.grid -->
+
+        <!-- EDIT: Physical and printable tools included with Full Setup -->
+        <div class="offline-tools card card--glass reveal" style="--reveal-delay: 120ms">
+          <div class="offline-tools__intro">
+            <div class="pill pill--green">
+              <i data-lucide="sparkles" aria-hidden="true"></i>
+              Included with Full Setup
+            </div>
+            <h3>Turn in-person conversations and completed jobs into action.</h3>
+            <p>
+              The higher-tier setup also includes practical tools your business can use
+              away from the website.
+            </p>
+          </div>
+
+          <div class="offline-tools__items">
+            <div class="offline-tool">
+              <div class="icon-chip icon-chip--cyan">
+                <i data-lucide="contactless" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h4>Programmed NFC Contact Card</h4>
+                <p>
+                  Tap the card to a compatible phone so a customer or referral partner
+                  can quickly save your business contact details and open your website.
+                </p>
+              </div>
+            </div>
+
+            <div class="offline-tool">
+              <div class="icon-chip icon-chip--amber">
+                <i data-lucide="qr-code" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h4>Google Review QR Code</h4>
+                <p>
+                  A ready-to-use QR code linked directly to your Google review page for
+                  invoices, receipts, contracts, signs, leave-behinds, and follow-up materials.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.container -->
+    </section>
+
+
+    <!-- ====================================================
+         SECTION 4: DEMO / BEFORE & AFTER
+         EDIT: Before/after card content, demo business name
+         ==================================================== -->
+    <section id="demo" class="section">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">See what changes</span>
+          </div>
+          <!-- EDIT: Section headline and sample business reference -->
+          <h2>See what changes.</h2>
+          <p class="text-muted">Here's a side-by-side look at a sample HVAC business — before the system, and after.</p>
+          <div class="pill pill--muted demo-sample-pill" style="margin-top: 12px">
+            Sample demo business: Riverbend Heating &amp; Air · Southern Indiana
+          </div>
+        </div>
+
+        <!-- Before / After layout -->
+        <div class="compare__layout">
+
+          <!-- BEFORE column -->
+          <div class="reveal reveal--left">
+            <div class="compare__col-title text-warn">
+              <i data-lucide="alert-triangle" style="width:20px;height:20px;" aria-hidden="true"></i>
+              Before: leads leak everywhere
+            </div>
+
+            <!-- EDIT: Before cards -->
+            <div class="compare-card compare-card--before">
+              <div class="compare-card__label compare-card__label--before">
+                <i data-lucide="alert-triangle"></i>
+                Old website
+              </div>
+              <div class="compare-card__mock-site">
+                <strong>Riverbend Heating &amp; Cooling</strong>
+                Call (812) 555-0178
+                <br />
+                <span style="font-size:0.75rem;opacity:0.7;">Heating and Cooling Services</span>
+              </div>
+              <p class="text-muted" style="font-size:0.8rem;margin-top:8px;">
+                <i data-lucide="x-circle"
+                  style="width:12px;height:12px;vertical-align:middle;margin-right:4px;color:var(--warn);"
+                  aria-hidden="true"></i>
+                No quote form
+              </p>
+            </div>
+
+            <div class="compare-card compare-card--before">
+              <div class="compare-card__label compare-card__label--before">
+                <i data-lucide="alert-triangle"></i>
+                Google profile
+              </div>
+              <p style="font-size:0.85rem;color:var(--muted);">Missing service descriptions · Few photos · No quote link
+              </p>
+            </div>
+
+            <div class="compare-card compare-card--before">
+              <div class="compare-card__label compare-card__label--before">
+                <i data-lucide="phone-missed"></i>
+                Missed call
+              </div>
+              <div class="compare-card__bubble">
+                <span style="color:var(--warn);">Missed Call — no follow-up sent</span>
+              </div>
+            </div>
+
+            <div class="compare-card compare-card--before">
+              <div class="compare-card__label compare-card__label--before">
+                <i data-lucide="alert-triangle"></i>
+                Lead tracking
+              </div>
+              <p style="font-size:0.85rem;color:var(--muted);">Lead info scattered across voicemail, texts, and memory.
+              </p>
+            </div>
+
+          </div><!-- /.before column -->
+
+          <!-- VS badge -->
+          <div class="compare__vs reveal" style="--reveal-delay: 200ms">VS</div>
+
+          <!-- AFTER column -->
+          <div class="reveal reveal--right">
+            <div class="compare__col-title text-green">
+              <i data-lucide="check-circle" style="width:20px;height:20px;" aria-hidden="true"></i>
+              After: every lead has a next step
+            </div>
+
+            <!-- EDIT: After cards -->
+            <div class="compare-card compare-card--after">
+              <div class="compare-card__label compare-card__label--after">
+                <i data-lucide="check-circle"></i>
+                New landing page
+              </div>
+              <div class="compare-card__mock-site">
+                <strong>Riverbend Heating &amp; Air — Fast, Reliable HVAC</strong>
+                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                  <span
+                    style="background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3);border-radius:999px;padding:4px 10px;font-size:0.75rem;font-weight:600;">Call
+                    Now</span>
+                  <span
+                    style="background:rgba(34,197,94,0.15);color:var(--accent-2);border:1px solid rgba(34,197,94,0.3);border-radius:999px;padding:4px 10px;font-size:0.75rem;font-weight:600;">Request
+                    Quote</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="compare-card compare-card--after">
+              <div class="compare-card__label compare-card__label--after">
+                <i data-lucide="check-circle"></i>
+                Quote form
+              </div>
+              <div class="compare-card__form-mock">
+                <div class="compare-card__form-field">Name</div>
+                <div class="compare-card__form-field">Phone</div>
+                <div class="compare-card__form-field">Service needed: AC / Heat / Both</div>
+                <div class="compare-card__form-field">Urgency · Photo upload</div>
+              </div>
+            </div>
+
+            <div class="compare-card compare-card--after">
+              <div class="compare-card__label compare-card__label--after">
+                <i data-lucide="message-square"></i>
+                Auto-reply
+              </div>
+              <div class="compare-card__bubble compare-card__bubble--reply">
+                Sorry we missed you — tell us what you need or request a quote here.
+              </div>
+            </div>
+
+            <div class="compare-card compare-card--after">
+              <div class="compare-card__label compare-card__label--after">
+                <i data-lucide="check-circle"></i>
+                Lead tracker
+              </div>
+              <div class="compare-card__flow">
+                <span class="compare-card__flow-pill compare-card__flow-pill--new">New</span>
+                <span class="compare-card__flow-arrow">›</span>
+                <span class="compare-card__flow-pill compare-card__flow-pill--contact">Contacted</span>
+                <span class="compare-card__flow-arrow">›</span>
+                <span class="compare-card__flow-pill compare-card__flow-pill--sched">Est. Scheduled</span>
+                <span class="compare-card__flow-arrow">›</span>
+                <span class="compare-card__flow-pill compare-card__flow-pill--booked">Booked</span>
+              </div>
+            </div>
+
+            <div class="compare-card compare-card--after">
+              <div class="compare-card__label compare-card__label--after">
+                <i data-lucide="star"></i>
+                Review request
+              </div>
+              <div class="compare-card__bubble compare-card__bubble--reply">
+                Thanks for choosing us — leave a quick review here.
+              </div>
+            </div>
+
+          </div><!-- /.after column -->
+
+        </div><!-- /.compare__layout -->
+
+        <!-- CTA to demo page -->
+        <div class="compare__cta reveal">
+          <a href="demo.html" class="btn btn--secondary">
+            Explore the full demo
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+
+      </div><!-- /.container -->
+    </section>
+
+
+    <!-- ====================================================
+         SECTION 5: HOW IT WORKS
+         EDIT: Step titles and descriptions
+         ==================================================== -->
+    <section id="how-it-works" class="section section--alt">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">How it works</span>
+          </div>
+          <!-- EDIT: Section headline -->
+          <h2>From audit to installed in a few simple steps.</h2>
+        </div>
+
+        <div class="steps">
+          <div class="steps__track" role="list">
+
+            <!-- EDIT: Step 1 -->
+            <div class="step reveal" style="--reveal-delay: 0ms" role="listitem">
+              <div class="step__number" aria-hidden="true">1</div>
+              <div class="step__body">
+                <div class="step__title">Free Lead Audit</div>
+                <p class="step__desc">I review your website, Google profile, quote path, and follow-up process.</p>
+              </div>
+            </div>
+
+            <!-- EDIT: Step 2 -->
+            <div class="step reveal" style="--reveal-delay: 100ms" role="listitem">
+              <div class="step__number" aria-hidden="true">2</div>
+              <div class="step__body">
+                <div class="step__title">Simple Setup Plan</div>
+                <p class="step__desc">I show you the most obvious places leads are leaking.</p>
+              </div>
+            </div>
+
+            <!-- EDIT: Step 3 -->
+            <div class="step reveal" style="--reveal-delay: 200ms" role="listitem">
+              <div class="step__number" aria-hidden="true">3</div>
+              <div class="step__body">
+                <div class="step__title">Install the System</div>
+                <p class="step__desc">I build the landing page, quote form, lead tracker, review templates, and
+                  follow-up pieces.</p>
+              </div>
+            </div>
+
+            <!-- EDIT: Step 4 -->
+            <div class="step reveal" style="--reveal-delay: 300ms" role="listitem">
+              <div class="step__number" aria-hidden="true">4</div>
+              <div class="step__body">
+                <div class="step__title">Test Everything</div>
+                <p class="step__desc">We test the form, buttons, notifications, mobile layout, and customer path.</p>
+              </div>
+            </div>
+
+            <!-- EDIT: Step 5 -->
+            <div class="step reveal" style="--reveal-delay: 400ms" role="listitem">
+              <div class="step__number" aria-hidden="true">5</div>
+              <div class="step__body">
+                <div class="step__title">Maintain &amp; Improve</div>
+                <p class="step__desc">Optional monthly support keeps the system updated and working.</p>
+              </div>
+            </div>
+
+          </div><!-- /.steps__track -->
+        </div><!-- /.steps -->
+
+      </div><!-- /.container -->
+    </section>
+
+
+    <!-- ====================================================
+         SECTION 7: BUILT FOR (who this is for)
+         EDIT: Card titles and supporting sentences
+         ==================================================== -->
+    <section class="section section--alt">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">Who this is for</span>
+          </div>
+          <!-- EDIT: Section headline and subhead -->
+          <h2>Built for HVAC businesses like these.</h2>
+          <p class="text-muted">No fake reviews here — just the kinds of businesses this system helps most.</p>
+        </div>
+
+        <div class="built-for__grid">
+
+          <!-- EDIT: Built-for cards -->
+          <div class="card card--hover built-for__card reveal" style="--reveal-delay: 0ms">
+            <div class="icon-chip icon-chip--cyan">
+              <i data-lucide="wrench"></i>
+            </div>
+            <div class="built-for__title">Busy owner-operators</div>
+            <p class="built-for__desc">Running calls all day with no time to chase leads back.</p>
+          </div>
+
+          <div class="card card--hover built-for__card reveal" style="--reveal-delay: 100ms">
+            <div class="icon-chip icon-chip--green">
+              <i data-lucide="users"></i>
+            </div>
+            <div class="built-for__title">Small crews</div>
+            <p class="built-for__desc">1–5 tech operations where the owner is also in the field.</p>
+          </div>
+
+          <div class="card card--hover built-for__card reveal" style="--reveal-delay: 200ms">
+            <div class="icon-chip icon-chip--orange">
+              <i data-lucide="moon"></i>
+            </div>
+            <div class="built-for__title">After-hours calls</div>
+            <p class="built-for__desc">HVAC emergencies don't wait for business hours.</p>
+          </div>
+
+          <div class="card card--hover built-for__card reveal" style="--reveal-delay: 300ms">
+            <div class="icon-chip icon-chip--cyan">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="built-for__title">Service-area businesses</div>
+            <p class="built-for__desc">Covering a city or county without a storefront to walk into.</p>
+          </div>
+
+          <div class="card card--hover built-for__card reveal" style="--reveal-delay: 400ms">
+            <div class="icon-chip icon-chip--amber">
+              <i data-lucide="star"></i>
+            </div>
+            <div class="built-for__title">Businesses that depend on reviews</div>
+            <p class="built-for__desc">Google reviews matter for HVAC — and most good ones go unasked.</p>
+          </div>
+
+        </div><!-- /.built-for__grid -->
+
+      </div><!-- /.container -->
+    </section>
+
+
+    <!-- ====================================================
+         SECTION 9: FAQ
+         EDIT: Questions and answers
+         ==================================================== -->
+    <section id="faq" class="section section--alt">
+      <div class="container">
+
+        <div class="section-head center reveal">
+          <div class="pill pill--accent">
+            <span class="eyebrow">FAQ</span>
+          </div>
+          <!-- EDIT: Section headline -->
+          <h2>Questions HVAC owners ask.</h2>
+        </div>
+
+        <div class="faq-list max-840 mx-auto reveal" style="--reveal-delay: 80ms">
+
+          <!-- EDIT: FAQ item 1 -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              Do I need a brand-new website?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>Not always. If your current website is usable, I can add a quote page or lead-capture form. If it's
+                  outdated or hard to edit, a simple landing page may be better.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: FAQ item 2 -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              Who owns the domain?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>You should own your domain. I can help connect it, but your business should control it.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: FAQ item 3 -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              Can this work with my existing phone number?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>Usually yes, depending on your current phone setup. Missed-call text-back requires a compatible
+                  phone or SMS platform, but this usually isn't a problem.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: FAQ item 4 — no guarantee language -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              Do you guarantee more leads?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>No. This will improve your lead-capture system, but no one can honestly guarantee calls,
+                  rankings, sales, or revenue.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: FAQ item 5 -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              What do you need from me?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>Basic business details, services, service area, logo/photos if available, access to your
+                  website/domain, and Google Business Profile edit access if we work on your profile (not your Google
+                  password, you just add me to the team).</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: FAQ item 6 -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              How long does setup take?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>Most setups can be completed within a few business days of receiving the needed materials and
+                  access.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: FAQ item 7 -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              Can you manage it monthly?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>Absolutely. Monthly maintenance includes hosting, occasional edits, form checks, Google review
+                  monitoring and reply help, and basic
+                  updates.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: FAQ item 8 -->
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-toggle aria-expanded="false">
+              Do you run ads?
+              <i data-lucide="chevron-down" class="faq-item__icon"></i>
+            </button>
+            <div class="faq-item__body">
+              <div class="faq-item__content">
+                <p>Not as part of the starter setup. The setup is focused on capturing and organizing leads from your
+                  existing
+                  traffic, calls, and imrpoving your profile. Data-driven, AI-optimized ad campaigns can be
+                  incorporated. If interested, let us know and we'll talk</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.faq-list -->
+
+      </div><!-- /.container -->
+    </section>
+
+
+    <!-- ====================================================
+         SECTION 10: FINAL CTA BAND
+         EDIT: CTA headline and supporting copy
+         ==================================================== -->
+    <section class="final-cta section" aria-label="Final call to action">
+      <div class="container">
+        <div class="final-cta__inner card card--glass reveal reveal--scale">
+          <!-- EDIT: Final CTA headline and body -->
+          <h2>Ready to stop losing easy quote requests?</h2>
+          <p>Send me a message with your website or Google profile and I'll review it and we'll talk.
+          </p>
+          <a href="audit.html" class="btn btn--primary btn--lg" data-config-href="auditUrl">
+            Request Free Audit
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__grid">
+
+        <!-- Column 1: Brand + description -->
+        <div class="site-footer__brand">
+          <a href="index.html" class="brand">
+            <img src="assets/eai-mark.png" alt="" class="brand__logo" width="40" height="28" />
+            <span class="brand__name" data-config="brandName">ElipsionAI</span>
+          </a>
+          <p class="site-footer__desc">
+            A done-for-you lead-capture system built specifically for HVAC contractors
+            who are tired of missing calls and losing jobs to competitors.
+          </p>
+        </div>
+
+        <!-- Column 2: Quick links -->
+        <div class="site-footer__col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="demo.html">Demo</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="audit.html">Free Audit</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Contact -->
+        <!-- ⚠️ data-config updates the link TEXT but NOT the href.
+             If you change email/phone in config.js, also update the
+             href="mailto:..." and href="tel:..." values below. -->
+        <div class="site-footer__col site-footer__contact">
+          <h4>Contact</h4>
+          <p>
+            <i data-lucide="mail"></i>
+            <a href="mailto:Jacob.Briggs@ElipsionGroup.com" data-config="email">Jacob.Briggs@ElipsionGroup.com</a>
+          </p>
+          <p>
+            <i data-lucide="phone"></i>
+            <a href="tel:+18124898057" data-config="phone">(812) 489-8057</a>
+          </p>
+        </div>
+
+      </div><!-- /.site-footer__grid -->
+
+      <!-- Bottom bar (no extra .container — it's already inside one) -->
+      <div class="site-footer__bottom">
+        <p class="site-footer__disclaimer">
+          This service improves lead-capture systems but does not guarantee specific
+          rankings, leads, sales, or revenue.
+        </p>
+        <p class="site-footer__copy">
+          &copy; <span id="footer-year"></span>
+          <span data-config="brandName">ElipsionAI</span>. All rights reserved.
+        </p>
+      </div>
+
+    </div><!-- /.container -->
+  </footer>
+
+  <!-- Auto-update copyright year -->
+  <script>
+    var el = document.getElementById('footer-year');
+    if (el) el.textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Lucide icons (before config + main)
+       Pinned to a specific version with Subresource Integrity (SRI).
+       To upgrade: run the pin-lucide command in README.md to get a new hash. -->
+  <script src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.min.js"
+    integrity="sha384-bdZtphetAEBgkGZvhZXOFDWc55tHGLqaSo1f4qZtgvEiolEBqlJ9u6FTk+CoLfj0"
+    crossorigin="anonymous"></script>
+  <!-- Site config (must load before main.js) -->
+  <script src="js/config.js"></script>
+  <!-- Main behaviour -->
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

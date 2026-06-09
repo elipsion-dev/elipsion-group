@@ -1,0 +1,8 @@
+Lead-Capture Business Plan.md
+
+# Supabase local state and function secrets
+supabase/.temp/
+supabase/functions/.env
+.env
+.env.*
+.DS_Store

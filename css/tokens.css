@@ -1,0 +1,336 @@
+/* ============================================================
+   tokens.css — Design Tokens, Reset, Base Typography,
+                Layout Utilities
+   Lead-Capture-Site — vanilla HTML/CSS/JS
+   ============================================================ */
+
+/* ── Google Fonts (also linked in <head>, this comment is a
+      reminder only — do not import here, use <link> tags)    */
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Backgrounds */
+  --bg:        #07111f;
+  --bg-2:      #0a1626;
+
+  /* Card surfaces */
+  --card-bg:   rgba(255, 255, 255, 0.06);
+  --card-bg-2: rgba(255, 255, 255, 0.04);
+
+  /* Borders */
+  --border:        rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* Accent colours */
+  --accent:   #38bdf8;   /* cyan  — primary / system         */
+  --accent-2: #22c55e;   /* green — leads / money / success  */
+  --warn:     #f97316;   /* orange — lost leads / before     */
+
+  /* Text */
+  --text:  #f8fafc;
+  --muted: #94a3b8;
+
+  /* Glow halos */
+  --accent-glow: rgba(56,  189, 248, 0.35);
+  --green-glow:  rgba(34,  197,  94, 0.30);
+  --warn-glow:   rgba(249, 115,  22, 0.30);
+
+  /* Radius scale */
+  --radius-sm:   10px;
+  --radius:      16px;
+  --radius-lg:   24px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 10px 40px -12px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 40px -8px var(--accent-glow);
+
+  /* Blur */
+  --blur: 14px;
+
+  /* Layout */
+  --maxw:          1200px;
+  --space-section: clamp(64px, 9vw, 120px);
+
+  /* Fonts */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+}
+
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  /* Prevent fixed header (72px) from hiding anchor targets on nav click */
+  scroll-padding-top: 88px;
+  /* clip (not hidden) stops page-level horizontal scroll from off-screen
+     reveal transforms without breaking position: sticky */
+  overflow-x: clip;
+}
+
+body {
+  background:              var(--bg);
+  color:                   var(--text);
+  font-family:             var(--font-body);
+  font-size:               1rem;
+  line-height:             1.6;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x:              hidden;
+  min-height:              100dvh;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color:      #04121f;
+}
+
+/* Links base */
+a {
+  color:           inherit;
+  text-decoration: none;
+}
+
+/* Images */
+img, svg, video {
+  display:   block;
+  max-width: 100%;
+}
+
+/* Lists (reset; re-style in components) */
+ul, ol {
+  list-style: none;
+}
+
+/* Buttons base (further styled in components.css) */
+button {
+  font-family: inherit;
+  cursor:      pointer;
+  border:      none;
+  background:  transparent;
+}
+
+/* Form elements */
+input, select, textarea {
+  font-family: inherit;
+  font-size:   inherit;
+  color:       inherit;
+}
+
+/* Headings base */
+h1, h2, h3, h4, h5, h6 {
+  font-family:    var(--font-display);
+  font-weight:    700;
+  line-height:    1.1;
+  letter-spacing: -0.02em;
+  color:          var(--text);
+}
+
+h1 { font-size: clamp(2.2rem, 5.5vw, 3.75rem); }
+h2 { font-size: clamp(1.8rem, 4vw,  3rem);      }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+h4 { font-size: clamp(1.1rem, 2vw, 1.35rem);    }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem;   }
+
+p {
+  max-width: 72ch;
+}
+
+strong { font-weight: 600; }
+
+hr {
+  border:     none;
+  border-top: 1px solid var(--border);
+  margin:     0;
+}
+
+
+/* ============================================================
+   ANIMATED BACKGROUND AURORA
+   Page agents place <div class="bg-aurora"></div>
+   right after <body>. Blobs are ::before / ::after.
+   ============================================================ */
+.bg-aurora {
+  position:       fixed;
+  inset:          0;
+  z-index:        -1;
+  pointer-events: none;
+  overflow:       hidden;
+}
+
+.bg-aurora::before,
+.bg-aurora::after {
+  content:       '';
+  position:      absolute;
+  border-radius: 50%;
+  filter:        blur(80px);
+  opacity:       0.18;
+  will-change:   transform, opacity;
+  animation:     auroraDrift 18s ease-in-out infinite alternate;
+}
+
+.bg-aurora::before {
+  width:            60vw;
+  height:           60vw;
+  max-width:        700px;
+  max-height:       700px;
+  background:       radial-gradient(circle, rgba(56,189,248,0.6) 0%, transparent 70%);
+  top:              -20%;
+  left:             -15%;
+  animation-delay:  0s;
+}
+
+.bg-aurora::after {
+  width:            50vw;
+  height:           50vw;
+  max-width:        600px;
+  max-height:       600px;
+  background:       radial-gradient(circle, rgba(34,197,94,0.45) 0%, transparent 70%);
+  bottom:           -20%;
+  right:            -10%;
+  animation-delay:  -9s;
+  animation-duration: 22s;
+}
+
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+
+/* Container */
+.container {
+  width:          100%;
+  max-width:      var(--maxw);
+  margin-inline:  auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+/* Section wrapper */
+.section {
+  padding-block: var(--space-section);
+  position:      relative;
+}
+
+.section--alt {
+  background: var(--bg-2);
+}
+
+/* Grid system */
+.grid {
+  display: grid;
+  gap:     clamp(16px, 2.5vw, 28px);
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Collapse to 2 cols at medium, 1 col at mobile */
+@media (max-width: 900px) {
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Flex helpers */
+.flex         { display: flex; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-gap     { display: flex; gap: clamp(12px, 2vw, 20px); }
+.flex-wrap    { flex-wrap: wrap; }
+
+/* Stack (vertical flex) */
+.stack {
+  display:        flex;
+  flex-direction: column;
+  gap:            clamp(12px, 2vw, 20px);
+}
+
+/* Spacing */
+.mx-auto   { margin-inline: auto; }
+.mt-auto   { margin-top: auto; }
+.center    { text-align: center; }
+.left      { text-align: left; }
+
+/* Width helpers */
+.w-full  { width: 100%; }
+.max-680 { max-width: 680px; }
+.max-840 { max-width: 840px; }
+
+
+/* ============================================================
+   TEXT UTILITIES
+   ============================================================ */
+.text-muted    { color: var(--muted); }
+.text-accent   { color: var(--accent); }
+.text-green    { color: var(--accent-2); }
+.text-warn     { color: var(--warn); }
+
+.text-gradient {
+  background:            linear-gradient(135deg, var(--accent) 0%, #bae6fd 60%, #f0f9ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip:       text;
+  color:                 transparent; /* fallback */
+}
+
+.text-sm  { font-size: 0.875rem; }
+.text-xs  { font-size: 0.8rem;   }
+.text-lg  { font-size: 1.125rem; }
+.text-xl  { font-size: 1.25rem;  }
+
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-600     { font-weight: 600; }
+.font-700     { font-weight: 700; }
+
+
+/* ============================================================
+   EYEBROW LABEL
+   ============================================================ */
+.eyebrow {
+  display:        inline-block;
+  font-family:    var(--font-body);
+  font-size:      0.75rem;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--accent);
+}
+
+
+/* ============================================================
+   VISIBILITY / DISPLAY
+   ============================================================ */
+.hidden           { display: none !important; }
+.visually-hidden  {
+  position:  absolute;
+  width:     1px;
+  height:    1px;
+  overflow:  hidden;
+  clip:      rect(0,0,0,0);
+  white-space: nowrap;
+}
