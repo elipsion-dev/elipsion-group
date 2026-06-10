@@ -6,3 +6,7 @@ supabase/functions/.env
 .env
 .env.*
 .DS_Store
+
+# Browser verification / screenshot artifacts
+.playwright-mcp/
+sc-*.png
