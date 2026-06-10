@@ -533,6 +533,28 @@
   font-weight: 600;
 }
 
+/* Add-on band in the comparison table */
+.pricing-table__group th {
+  background: rgba(56, 189, 248, 0.08);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.table-addon {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
 .pricing-process__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
