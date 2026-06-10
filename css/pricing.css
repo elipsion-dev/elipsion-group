@@ -200,6 +200,218 @@
   text-align: center;
 }
 
+/* ============================================================
+   ADD-ONS / POWER-UPS
+   ============================================================ */
+.addon-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2.5vw, 26px);
+  margin-top: clamp(36px, 5vw, 52px);
+}
+
+.addon-card {
+  padding: clamp(24px, 3.5vw, 40px);
+}
+
+.addon-card--featured {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-card), 0 0 60px -24px var(--accent-glow);
+}
+
+.addon-card__head {
+  display: grid;
+  grid-template-columns: 64px 1fr 210px;
+  gap: clamp(18px, 3vw, 32px);
+  align-items: start;
+}
+
+.addon-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius);
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.addon-card__icon .lucide {
+  width: 30px;
+  height: 30px;
+  color: var(--accent);
+}
+
+.addon-card__tag {
+  margin-bottom: 14px;
+}
+
+.addon-card__intro h3 {
+  font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+
+.addon-card__intro p {
+  max-width: 60ch;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.addon-card__intro em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Price column */
+.addon-card__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--card-bg-2);
+  border: 1px solid var(--border);
+}
+
+.addon-card__price-main {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.addon-card__price-note {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.addon-card__price-sub {
+  margin-top: 10px;
+  padding-top: 10px;
+  width: 100%;
+  border-top: 1px solid var(--border);
+  color: var(--accent-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.addon-card__price .btn {
+  margin-top: 16px;
+}
+
+/* Benefit bullets */
+.addon-card__bullets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px clamp(20px, 4vw, 40px);
+  margin-top: clamp(22px, 3vw, 30px);
+  padding-top: clamp(22px, 3vw, 30px);
+  border-top: 1px solid var(--border);
+}
+
+.addon-card__bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.addon-card__bullets .lucide {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent-2);
+}
+
+.addon-card__foot {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.addon-card__foot strong {
+  color: var(--text);
+}
+
+/* Usage-fee callout (chatbot) */
+.addon-card__callout {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 14px;
+  margin-top: 20px;
+  padding: 18px 20px;
+  border-radius: var(--radius-sm);
+  background: rgba(56, 189, 248, 0.06);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+}
+
+.addon-card__callout .lucide {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.addon-card__callout div {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+.addon-card__callout strong {
+  color: var(--text);
+}
+
+@media (max-width: 860px) {
+  .addon-card__head {
+    grid-template-columns: 52px 1fr;
+  }
+  .addon-card__price {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+  }
+  .addon-card__price-sub {
+    width: auto;
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .addon-card__price .btn {
+    margin-top: 0;
+    margin-left: auto;
+    width: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .addon-card__head {
+    grid-template-columns: 1fr;
+  }
+  .addon-card__bullets {
+    grid-template-columns: 1fr;
+  }
+  .addon-card__price .btn {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
 .pricing-table-wrap {
   overflow-x: auto;
   margin-top: 40px;
