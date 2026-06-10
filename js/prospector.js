@@ -32,6 +32,9 @@
 
   function getPw() { return sessionStorage.getItem(PW_KEY) || ""; }
 
+  /* No website = score 0 (biggest opportunity) for filtering/sorting. */
+  function webScore(b) { return b.websiteScore == null ? 0 : b.websiteScore; }
+
   /* Revenue-math assumptions from the form (override server defaults). */
   function getAssumptions() {
     var a = {};
@@ -138,8 +141,30 @@
           statusEl.textContent = "No businesses found for that search.";
           return;
         }
-        hide(statusEl);
-        results.forEach(renderCard);
+
+        // Filter to prospects: weak in profile OR website. A missing
+        // website counts as 0 (the biggest opportunity), so it always passes.
+        var threshold = parseInt(document.getElementById("maxScore").value, 10);
+        if (isNaN(threshold)) threshold = 7;
+        var total = results.length;
+        var prospects = results.filter(function (b) {
+          return b.gbpScore <= threshold || webScore(b) <= threshold;
+        });
+        // Weakest combined score first = biggest opportunity at the top.
+        prospects.sort(function (a, b) {
+          return (a.gbpScore + webScore(a)) - (b.gbpScore + webScore(b));
+        });
+
+        if (prospects.length === 0) {
+          statusEl.textContent = total + " businesses found, but all scored above " +
+            threshold + " — they look strong. Try a smaller town or raise the threshold.";
+          return;
+        }
+        statusEl.textContent = "Showing " + prospects.length + " prospect" +
+          (prospects.length === 1 ? "" : "s") + " of " + total + " (hid " +
+          (total - prospects.length) + " strong business" +
+          (total - prospects.length === 1 ? "" : "es") + " scoring above " + threshold + ").";
+        prospects.forEach(renderCard);
       })
       .catch(function () {
         btn.disabled = false;

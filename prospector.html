@@ -53,6 +53,14 @@
         <button class="btn btn--primary" type="submit">Scan</button>
       </form>
 
+      <!-- Prospect filter: hide businesses strong in BOTH profile and website. -->
+      <div class="filter-row">
+        <label>Hide businesses scoring above
+          <input id="maxScore" type="number" value="7" min="1" max="10" />
+        </label>
+        <span class="text-xs text-muted">Shows prospects weak in Google profile OR website (no website = always shown).</span>
+      </div>
+
       <!-- Revenue-math inputs used by the email generator. Tune per area. -->
       <div class="assumptions">
         <label>Avg job $

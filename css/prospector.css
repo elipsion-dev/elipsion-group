@@ -71,7 +71,31 @@
   border-color: var(--accent);
 }
 
-/* ── Assumptions row ─────────────────────────────────────── */
+/* ── Filter + assumptions rows ───────────────────────────── */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.filter-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.filter-row input[type="number"] {
+  width: 64px;
+  background: var(--card-bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  color: var(--text);
+}
+.filter-row input:focus { outline: none; border-color: var(--accent); }
+
 .assumptions {
   display: flex;
   align-items: center;
