@@ -191,6 +191,73 @@
   margin-top: 24px;
 }
 
+/* "See add-ons below" cue at the bottom of tier cards */
+.pricing__addons-cue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: gap 0.18s ease, color 0.18s ease;
+}
+
+.pricing__addons-cue .lucide {
+  width: 15px;
+  height: 15px;
+}
+
+.pricing__addons-cue:hover {
+  gap: 10px;
+  color: #bae6fd;
+}
+
+/* Bold center banner below the tier cards */
+.pricing__extras-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 800px;
+  margin: clamp(32px, 5vw, 52px) auto 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  background: linear-gradient(135deg, var(--accent) 0%, #bae6fd 55%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  transition: transform 0.18s ease;
+}
+
+.pricing__extras-banner .lucide {
+  width: clamp(22px, 3vw, 32px);
+  height: clamp(22px, 3vw, 32px);
+  color: var(--accent);
+  -webkit-text-fill-color: var(--accent);
+  animation: nudgeDown 1.6s ease-in-out infinite;
+}
+
+.pricing__extras-banner:hover { transform: translateY(-2px); }
+
+@keyframes nudgeDown {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing__extras-banner .lucide { animation: none; }
+}
+
 .pricing__note {
   max-width: 74ch;
   margin: clamp(26px, 4vw, 40px) auto 0;
