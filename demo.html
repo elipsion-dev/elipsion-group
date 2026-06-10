@@ -421,31 +421,29 @@
                     <div class="sc-view" data-sc-view="estimate">
                       <div class="sc-est">
                         <div class="sc-est__head">
-                          <strong>Instant estimate</strong>
-                          <span>Pick what you need and see a price right now.</span>
+                          <strong>Build your estimate</strong>
+                          <span>Tap everything you need — your price updates instantly.</span>
                         </div>
-                        <div class="sc-est__group">
-                          <span class="sc-est__label">Service</span>
-                          <div class="sc-est__opts" data-est-group="service">
-                            <button class="sc-opt is-active" data-price="89">AC Diagnostic <b>$89</b></button>
-                            <button class="sc-opt" data-price="450">AC Repair <b>$450</b></button>
-                            <button class="sc-opt" data-price="6500">New AC Install <b>$6,500</b></button>
-                            <button class="sc-opt" data-price="129">Furnace Tune-up <b>$129</b></button>
+                        <div class="sc-est__opts" data-est-group="services">
+                          <button class="sc-opt is-active" data-price="129">AC Recharge</button>
+                          <button class="sc-opt is-active" data-price="149">Duct Cleaning</button>
+                          <button class="sc-opt" data-price="450">AC Repair</button>
+                          <button class="sc-opt" data-price="129">Furnace Tune-up</button>
+                          <button class="sc-opt" data-price="199">Thermostat Install</button>
+                          <button class="sc-opt" data-price="179">Coil Cleaning</button>
+                          <button class="sc-opt" data-price="89">Refrigerant Leak Check</button>
+                          <button class="sc-opt" data-price="99">Air Filter Service</button>
+                          <button class="sc-opt" data-price="159">Drain Line Flush</button>
+                        </div>
+                        <div class="sc-est__footer">
+                          <div class="sc-est__total">
+                            <span>Estimated total</span>
+                            <strong id="sc-est-total">$278</strong>
                           </div>
+                          <button class="sc-est__book" data-sc-goto="schedule">
+                            Book this appointment <i data-lucide="arrow-right"></i>
+                          </button>
                         </div>
-                        <div class="sc-est__group">
-                          <span class="sc-est__label">Add-ons</span>
-                          <div class="sc-est__opts" data-est-group="addons">
-                            <button class="sc-opt" data-price="79">Same-day priority <b>+$79</b></button>
-                            <button class="sc-opt" data-price="149">Duct cleaning <b>+$149</b></button>
-                            <button class="sc-opt" data-price="99">Smart thermostat <b>+$99</b></button>
-                          </div>
-                        </div>
-                        <div class="sc-est__total">
-                          <span>Estimated total</span>
-                          <strong id="sc-est-total">$89</strong>
-                        </div>
-                        <button class="sc-est__cta">Book this estimate <i data-lucide="arrow-right"></i></button>
                         <small class="sc-est__note">Final price confirmed on-site · built from the contractor's real pricing.</small>
                       </div>
                     </div>

@@ -73,35 +73,32 @@
     });
   }
 
-  /* ── Instant estimate: live total ───────────────────────── */
+  /* ── Instant estimate: multi-select chips + live total ──── */
   function money(n) {
     return "$" + n.toLocaleString("en-US");
   }
   function recalc() {
     var total = 0;
-    var svc = document.querySelector('[data-est-group="service"] .sc-opt.is-active');
-    if (svc) total += parseInt(svc.getAttribute("data-price"), 10) || 0;
-    document.querySelectorAll('[data-est-group="addons"] .sc-opt.is-active').forEach(function (a) {
-      total += parseInt(a.getAttribute("data-price"), 10) || 0;
+    document.querySelectorAll('[data-est-group="services"] .sc-opt.is-active').forEach(function (o) {
+      total += parseInt(o.getAttribute("data-price"), 10) || 0;
     });
     var out = document.getElementById("sc-est-total");
     if (out) out.textContent = money(total);
   }
-  // Service is single-select (one always chosen).
-  document.querySelectorAll('[data-est-group="service"] .sc-opt').forEach(function (opt) {
-    opt.addEventListener("click", function () {
-      opt.parentElement.querySelectorAll(".sc-opt").forEach(function (o) {
-        o.classList.toggle("is-active", o === opt);
-      });
-      recalc();
-    });
-  });
-  // Add-ons toggle independently.
-  document.querySelectorAll('[data-est-group="addons"] .sc-opt').forEach(function (opt) {
+  document.querySelectorAll('[data-est-group="services"] .sc-opt').forEach(function (opt) {
     opt.addEventListener("click", function () {
       opt.classList.toggle("is-active");
       recalc();
     });
   });
   recalc();
+
+  /* ── "Book this appointment" jumps to the scheduler view ── */
+  document.querySelectorAll("[data-sc-goto]").forEach(function (link) {
+    link.addEventListener("click", function () {
+      var target = link.getAttribute("data-sc-goto");
+      var btn = document.querySelector('.sc-switch__btn[data-sc-tab="' + target + '"]');
+      if (btn) btn.click();
+    });
+  });
 })();
