@@ -132,6 +132,10 @@
               <span class="demo-switch__label">Lead-capture rebuild</span>
               <span class="demo-switch__meta">Complete customer path</span>
             </button>
+            <button data-tab="supercharged" role="tab" aria-selected="false">
+              <span class="demo-switch__label">Supercharged <i data-lucide="sparkles" class="demo-switch__spark"></i></span>
+              <span class="demo-switch__meta">AI chat · booking · instant quotes</span>
+            </button>
           </div>
         </div>
 
@@ -305,6 +309,154 @@
               <p class="demo-panel-note demo-panel-note--after">
                 The rebuild gives every visitor a clear next step and connects the website
                 to missed-call follow-up, lead tracking, review requests, and Google profile improvements.
+              </p>
+            </div>
+
+            <!-- SUPERCHARGED PANEL: interactive AI chat / booking / estimate -->
+            <div data-panel="supercharged">
+              <div class="browser browser--site browser--after browser--super"
+                aria-label="Supercharged HVAC website example with AI chat, online booking, and instant estimates">
+                <div class="browser__chrome">
+                  <div class="browser__dots" aria-hidden="true">
+                    <div class="browser__dot browser__dot--red"></div>
+                    <div class="browser__dot browser__dot--yellow"></div>
+                    <div class="browser__dot browser__dot--green"></div>
+                  </div>
+                  <div class="browser__url">riverbendheatingandair.com</div>
+                  <div class="browser__status browser__status--live">Supercharged</div>
+                </div>
+                <div class="browser__body sc-body">
+
+                  <!-- Interactive feature switcher -->
+                  <div class="sc-switch" role="tablist" aria-label="Supercharged feature">
+                    <button class="sc-switch__btn is-active" data-sc-tab="chat" role="tab" aria-selected="true">
+                      <i data-lucide="bot"></i> AI Chat
+                    </button>
+                    <button class="sc-switch__btn" data-sc-tab="schedule" role="tab" aria-selected="false">
+                      <i data-lucide="calendar-clock"></i> Book Online
+                    </button>
+                    <button class="sc-switch__btn" data-sc-tab="estimate" role="tab" aria-selected="false">
+                      <i data-lucide="calculator"></i> Instant Estimate
+                    </button>
+                  </div>
+
+                  <div class="sc-views">
+
+                    <!-- ── AI CHAT ──────────────────────────── -->
+                    <div class="sc-view is-active" data-sc-view="chat">
+                      <div class="sc-chat">
+                        <div class="sc-chat__header">
+                          <span class="sc-chat__avatar"><i data-lucide="bot"></i></span>
+                          <div class="sc-chat__id">
+                            <strong>Riverbend Assistant</strong>
+                            <span><span class="sc-live-dot"></span> Online · replies instantly</span>
+                          </div>
+                          <span class="sc-chat__badge">AI</span>
+                        </div>
+                        <div class="sc-chat__log" id="sc-chat-log">
+                          <div class="sc-msg sc-msg--bot">
+                            <p>Hi! 👋 I'm Riverbend's assistant. I can help with pricing, scheduling, or service questions — what's going on?</p>
+                          </div>
+                          <div class="sc-msg sc-msg--user">
+                            <p>My AC is blowing warm air. How much to look at it?</p>
+                          </div>
+                          <div class="sc-msg sc-msg--bot">
+                            <p>Sorry to hear that! A diagnostic visit is <strong>$89</strong> (waived if you book a repair). I have a tech near you <strong>today, 2–4 PM</strong>. Want me to hold that slot?</p>
+                          </div>
+                          <div class="sc-msg sc-msg--user is-hidden" data-reveal="q1"><p>Do you service Tell City?</p></div>
+                          <div class="sc-msg sc-msg--bot is-hidden" data-reveal="q1"><p>Yes — Tell City, Cannelton, Troy, and nearby areas are all in our service zone. 👍</p></div>
+                          <div class="sc-msg sc-msg--user is-hidden" data-reveal="q2"><p>Are you open on weekends?</p></div>
+                          <div class="sc-msg sc-msg--bot is-hidden" data-reveal="q2"><p>We offer same-day and weekend service. I can text you the next open time — want me to?</p></div>
+                        </div>
+                        <div class="sc-chat__replies" id="sc-chat-replies">
+                          <button class="sc-chip" data-reveal-btn="q1">Do you service Tell City?</button>
+                          <button class="sc-chip" data-reveal-btn="q2">Open on weekends?</button>
+                        </div>
+                        <div class="sc-chat__input" aria-hidden="true">
+                          <span>Type your question…</span>
+                          <span class="sc-chat__send"><i data-lucide="arrow-up"></i></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ── ONLINE BOOKING ───────────────────── -->
+                    <div class="sc-view" data-sc-view="schedule">
+                      <div class="sc-book">
+                        <div class="sc-book__head">
+                          <div>
+                            <strong>Book your appointment</strong>
+                            <span>Pick a time that works — no phone call needed.</span>
+                          </div>
+                          <span class="sc-book__sync"><i data-lucide="calendar-check"></i> Syncs to Google Calendar</span>
+                        </div>
+                        <div class="sc-book__days">
+                          <button class="sc-day is-active"><small>MON</small><b>Jun 9</b></button>
+                          <button class="sc-day"><small>TUE</small><b>Jun 10</b></button>
+                          <button class="sc-day"><small>WED</small><b>Jun 11</b></button>
+                          <button class="sc-day"><small>THU</small><b>Jun 12</b></button>
+                          <button class="sc-day"><small>FRI</small><b>Jun 13</b></button>
+                        </div>
+                        <div class="sc-book__slots" id="sc-slots">
+                          <button class="sc-slot">8:00 AM</button>
+                          <button class="sc-slot is-booked" disabled>10:00 AM</button>
+                          <button class="sc-slot">11:30 AM</button>
+                          <button class="sc-slot">1:00 PM</button>
+                          <button class="sc-slot sc-slot--rec">2:00 PM</button>
+                          <button class="sc-slot is-booked" disabled>3:30 PM</button>
+                          <button class="sc-slot">5:00 PM</button>
+                          <button class="sc-slot">6:30 PM</button>
+                        </div>
+                        <button class="sc-book__confirm" id="sc-book-confirm" disabled>Select a time to continue</button>
+                        <div class="sc-book__done is-hidden" id="sc-book-done">
+                          <i data-lucide="badge-check"></i>
+                          <div>
+                            <strong>You're booked!</strong>
+                            <span>Confirmation sent, added to the calendar, and a reminder is scheduled.</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ── INSTANT ESTIMATE ─────────────────── -->
+                    <div class="sc-view" data-sc-view="estimate">
+                      <div class="sc-est">
+                        <div class="sc-est__head">
+                          <strong>Instant estimate</strong>
+                          <span>Pick what you need and see a price right now.</span>
+                        </div>
+                        <div class="sc-est__group">
+                          <span class="sc-est__label">Service</span>
+                          <div class="sc-est__opts" data-est-group="service">
+                            <button class="sc-opt is-active" data-price="89">AC Diagnostic <b>$89</b></button>
+                            <button class="sc-opt" data-price="450">AC Repair <b>$450</b></button>
+                            <button class="sc-opt" data-price="6500">New AC Install <b>$6,500</b></button>
+                            <button class="sc-opt" data-price="129">Furnace Tune-up <b>$129</b></button>
+                          </div>
+                        </div>
+                        <div class="sc-est__group">
+                          <span class="sc-est__label">Add-ons</span>
+                          <div class="sc-est__opts" data-est-group="addons">
+                            <button class="sc-opt" data-price="79">Same-day priority <b>+$79</b></button>
+                            <button class="sc-opt" data-price="149">Duct cleaning <b>+$149</b></button>
+                            <button class="sc-opt" data-price="99">Smart thermostat <b>+$99</b></button>
+                          </div>
+                        </div>
+                        <div class="sc-est__total">
+                          <span>Estimated total</span>
+                          <strong id="sc-est-total">$89</strong>
+                        </div>
+                        <button class="sc-est__cta">Book this estimate <i data-lucide="arrow-right"></i></button>
+                        <small class="sc-est__note">Final price confirmed on-site · built from the contractor's real pricing.</small>
+                      </div>
+                    </div>
+
+                  </div><!-- /.sc-views -->
+                </div>
+              </div>
+              <p class="demo-panel-note demo-panel-note--after">
+                The premium add-ons: an AI assistant that answers customers instantly, self-serve booking
+                that drops straight onto your Google Calendar, and an instant estimate tool built from your
+                real pricing. Try the buttons above — they actually work.
               </p>
             </div>
           </div>
@@ -970,6 +1122,7 @@
   ></script>
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/demo-supercharged.js"></script>
 
 </body>
 </html>
