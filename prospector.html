@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <title>Lead Prospector — Internal</title>
+  <meta name="description" content="Internal lead-finding and profile scoring tool." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/prospector.css" />
+</head>
+<body>
+
+  <div class="bg-aurora"></div>
+
+  <main class="container prospector">
+
+    <!-- ── Lock screen ─────────────────────────────────────── -->
+    <section id="lock" class="lock">
+      <div class="lock__card">
+        <span class="eyebrow">ElipsionAI · Internal</span>
+        <h1>Lead Prospector</h1>
+        <p class="text-muted">Enter the access password to continue.</p>
+        <form id="lock-form" class="lock__form" autocomplete="off">
+          <input id="password" type="password" placeholder="Password" aria-label="Password" required />
+          <button class="btn btn--primary" type="submit">Unlock</button>
+        </form>
+        <p id="lock-error" class="form-error hidden"></p>
+      </div>
+    </section>
+
+    <!-- ── Tool ────────────────────────────────────────────── -->
+    <section id="tool" class="tool hidden">
+      <header class="tool__head">
+        <div>
+          <span class="eyebrow">Lead Prospector</span>
+          <h1>Find &amp; score local prospects</h1>
+        </div>
+        <button id="lock-btn" class="btn btn--ghost" type="button">Lock</button>
+      </header>
+
+      <form id="search-form" class="search-bar">
+        <input id="query" type="text" placeholder="City or ZIP (e.g. Evansville, IN or 47714)" aria-label="City or ZIP" required />
+        <input id="trade" type="text" value="HVAC" aria-label="Trade" />
+        <button class="btn btn--primary" type="submit">Scan</button>
+      </form>
+
+      <!-- Revenue-math inputs used by the email generator. Tune per area. -->
+      <div class="assumptions">
+        <label>Avg job $
+          <input id="avgJobValue" type="number" value="450" min="0" step="50" />
+        </label>
+        <label>Calls / month
+          <input id="monthlyCalls" type="number" value="80" min="0" step="5" />
+        </label>
+        <span class="assumptions__note text-xs text-muted">Used only for the "money you're losing" math in emails.</span>
+      </div>
+
+      <p id="search-error" class="form-error hidden"></p>
+
+      <div id="status" class="status hidden"></div>
+      <div id="results" class="results"></div>
+    </section>
+
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/prospector.js"></script>
+</body>
+</html>

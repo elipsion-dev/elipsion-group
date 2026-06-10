@@ -27,6 +27,7 @@ window.SITE_CONFIG = {
   ─────────────────────────────────────────────────────────── */
   auditUrl:  "audit.html",
   auditEndpoint: "https://dcspbdqkkbeyyvwgazbb.supabase.co/functions/v1/submit-audit",
+  prospectorEndpoint: "https://dcspbdqkkbeyyvwgazbb.supabase.co/functions/v1/prospector",
   ctaText:   "Request Free Audit",
 
   /* ── Pricing ─────────────────────────────────────────────

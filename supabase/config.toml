@@ -405,3 +405,9 @@ entrypoint = "./functions/submit-audit/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/submit-audit/*.html" ]
+
+[functions.prospector]
+enabled = true
+# Password-gated in code; the function's own PROSPECTOR_PASSWORD is the gate.
+verify_jwt = false
+entrypoint = "./functions/prospector/index.ts"
