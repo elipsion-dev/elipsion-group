@@ -74,17 +74,23 @@
     var btn = lockForm.querySelector("button");
     btn.disabled = true;
     btn.textContent = "Checking…";
-    call({ action: "scan", query: "" }).then(function (r) {
+    call({ action: "auth" }).then(function (r) {
       btn.disabled = false;
       btn.textContent = "Unlock";
-      if (r.status === 401) {
-        sessionStorage.removeItem(PW_KEY);
-        lockError.textContent = "Incorrect password.";
-        show(lockError);
+      if (r.status === 200 && r.data && r.data.ok) {
+        // Only an explicit success unlocks — never "anything but 401".
+        unlock();
         return;
       }
-      // 400 (empty query) or 200 both mean the password was accepted.
-      unlock();
+      sessionStorage.removeItem(PW_KEY);
+      if (r.status === 401) {
+        lockError.textContent = "Incorrect password.";
+      } else if (r.status === 503) {
+        lockError.textContent = "Tool not configured on the server (check Supabase secrets).";
+      } else {
+        lockError.textContent = (r.data && r.data.error) || "Could not verify. Try again.";
+      }
+      show(lockError);
     }).catch(function () {
       btn.disabled = false;
       btn.textContent = "Unlock";

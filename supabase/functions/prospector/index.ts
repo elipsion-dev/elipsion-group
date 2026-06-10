@@ -381,6 +381,11 @@ Deno.serve(async (req) => {
 
   const action = typeof body.action === "string" ? body.action : "scan";
 
+  /* ── AUTH: password already verified above; just confirm. ── */
+  if (action === "auth") {
+    return json({ ok: true }, 200, origin);
+  }
+
   /* ── SCAN ───────────────────────────────────────────────── */
   if (action === "scan") {
     const query = (typeof body.query === "string" ? body.query : "").trim().slice(0, 120);
