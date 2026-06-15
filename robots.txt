@@ -1,0 +1,52 @@
+# ElipsionAI — robots.txt
+# Everything is open to search and AI crawlers except the internal tool.
+
+User-agent: *
+Allow: /
+Disallow: /prospector.html
+
+# ── Explicitly welcome AI / answer-engine crawlers ──────────────
+# Per-agent rules override the wildcard block above, so each repeats the
+# one disallow. Listed to make it unambiguous that AI assistants may read,
+# index, and cite this site.
+User-agent: GPTBot
+Allow: /
+Disallow: /prospector.html
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /prospector.html
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /prospector.html
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /prospector.html
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /prospector.html
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /prospector.html
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /prospector.html
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /prospector.html
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /prospector.html
+
+User-agent: CCBot
+Allow: /
+Disallow: /prospector.html
+
+Sitemap: https://www.elipsiongroup.com/sitemap.xml

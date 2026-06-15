@@ -120,7 +120,7 @@
     var btn = searchForm.querySelector("button");
     btn.disabled = true;
     show(statusEl);
-    statusEl.textContent = "Searching Google and analyzing websites… (this can take 10–20s)";
+    statusEl.textContent = "Searching Google and analyzing websites… a large area pulls up to ~60 businesses, so this can take 15–40s.";
 
     call({ action: "scan", query: query, trade: tradeInput.value.trim() || "HVAC" })
       .then(function (r) {
@@ -137,6 +137,12 @@
           return;
         }
         var results = (r.data && r.data.results) || [];
+        var capReached = !!(r.data && r.data.capReached);
+        // Google limits how many results one search will return. When we likely
+        // hit that ceiling, nudge the user to narrow the area for full coverage.
+        var capNote = capReached
+          ? " This search hit Google's result ceiling, so a large city isn't fully covered — search a ZIP or single suburb to surface the rest."
+          : "";
         if (results.length === 0) {
           statusEl.textContent = "No businesses found for that search.";
           return;
@@ -157,13 +163,13 @@
 
         if (prospects.length === 0) {
           statusEl.textContent = total + " businesses found, but all scored above " +
-            threshold + " — they look strong. Try a smaller town or raise the threshold.";
+            threshold + " — they look strong. Try a smaller town or raise the threshold." + capNote;
           return;
         }
         statusEl.textContent = "Showing " + prospects.length + " prospect" +
           (prospects.length === 1 ? "" : "s") + " of " + total + " (hid " +
           (total - prospects.length) + " strong business" +
-          (total - prospects.length === 1 ? "" : "es") + " scoring above " + threshold + ").";
+          (total - prospects.length === 1 ? "" : "es") + " scoring above " + threshold + ")." + capNote;
         prospects.forEach(renderCard);
       })
       .catch(function () {

@@ -398,50 +398,105 @@ Deno.serve(async (req) => {
       return json({ error: "Search is not configured." }, 503, origin);
     }
 
-    // One Text Search (New) call returns up to 20 places with the fields
-    // below. Field mask is kept to the Pro SKU (no `reviews`) to stay in
-    // the cheaper/free tier.
+    // Text Search (New) returns up to 20 places per call plus a
+    // `nextPageToken`. We follow that token to pull every page Google will
+    // give us, stopping when no token comes back — i.e. "scan until there's
+    // nothing left to scan". Google is understood to cap Text Search around
+    // ~60 results (3 pages) per query, after which it stops issuing a token;
+    // MAX_PAGES is only a SAFETY BOUND so a runaway can't rack up cost/time.
+    // It is intentionally set ABOVE the assumed cap: if Google really stops at
+    // 3 pages the loop ends on its own at no extra cost, but if it hands out
+    // more we don't silently truncate. Covering a large metro past the ceiling
+    // would require splitting the area into sub-queries (ZIP/grid) + de-dupe —
+    // not done here; the UI nudges the user to narrow the area instead.
+    //
+    // NOTE: paginated Text Search requires `nextPageToken` in the field mask.
+    // If Google rejects this mask the FIRST call 400s and every scan breaks —
+    // confirm with a live scan after deploy.
+    //
+    // Field mask is kept to the Pro SKU (no `reviews`) to stay cheap. (To show
+    // review recency, add "places.reviews" here — but that bumps every page to
+    // the priciest Enterprise+Atmosphere SKU.)
+    const MAX_PAGES = 6;
     const fieldMask = [
       "places.id", "places.displayName", "places.formattedAddress",
       "places.nationalPhoneNumber", "places.websiteUri", "places.rating",
       "places.userRatingCount", "places.regularOpeningHours", "places.photos",
       "places.businessStatus", "places.googleMapsUri",
       "places.primaryTypeDisplayName", "places.editorialSummary",
+      // Required for pagination: the token lives at the top level, not under places.*
+      "nextPageToken",
     ].join(",");
 
     let places: Place[] = [];
+    let pagesFetched = 0;
+    let pageToken: string | undefined;
     try {
-      const gRes = await fetch(PLACES_SEARCH_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Goog-Api-Key": apiKey,
-          "X-Goog-FieldMask": fieldMask,
-        },
-        body: JSON.stringify({
+      for (let page = 0; page < MAX_PAGES; page++) {
+        const reqBody: Record<string, unknown> = {
           textQuery: `${trade} in ${query}`,
           pageSize: 20,
           languageCode: "en",
-        }),
-      });
-      if (!gRes.ok) {
-        const detail = await gRes.text();
-        console.error("Places API error:", gRes.status, detail);
-        return json({ error: "Google search failed. Check the API key, billing, and that Places API (New) is enabled." }, 502, origin);
+        };
+        // On follow-up pages the New API only needs the token (the original
+        // query params are remembered server-side, but we send them anyway).
+        if (pageToken) reqBody.pageToken = pageToken;
+
+        const gRes = await fetch(PLACES_SEARCH_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": apiKey,
+            "X-Goog-FieldMask": fieldMask,
+          },
+          body: JSON.stringify(reqBody),
+        });
+        if (!gRes.ok) {
+          const detail = await gRes.text();
+          console.error("Places API error:", gRes.status, detail);
+          // If earlier pages already returned businesses, keep them rather
+          // than failing the whole scan on a later page.
+          if (places.length > 0) break;
+          return json({ error: "Google search failed. Check the API key, billing, and that Places API (New) is enabled." }, 502, origin);
+        }
+        const data = await gRes.json();
+        const batch: Place[] = Array.isArray(data.places) ? data.places : [];
+        places.push(...batch);
+        pagesFetched++;
+        pageToken = typeof data.nextPageToken === "string" && data.nextPageToken
+          ? data.nextPageToken
+          : undefined;
+        // Stop when Google offers no more pages (cap reached or list exhausted).
+        if (!pageToken || batch.length === 0) break;
       }
-      const data = await gRes.json();
-      places = Array.isArray(data.places) ? data.places : [];
     } catch (e) {
       console.error("Places fetch failed:", e);
-      return json({ error: "Google search failed (network)." }, 502, origin);
+      if (places.length === 0) {
+        return json({ error: "Google search failed (network)." }, 502, origin);
+      }
     }
+
+    // De-dupe across pages by place id (pages can occasionally overlap).
+    const seen = new Set<string>();
+    places = places.filter((p) => {
+      const key = p.id ?? `${p.displayName?.text}|${p.formattedAddress}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    // Did we likely stop short of the full market? True if Google still had a
+    // token to give (we stopped on our own safety bound) OR we came back with a
+    // ceiling-like haul (~3 full pages), which is the documented Text Search cap.
+    const capReached = !!pageToken || places.length >= 58;
 
     if (places.length === 0) {
-      return json({ results: [], query, trade }, 200, origin);
+      return json({ results: [], query, trade, totalFound: 0, pagesFetched, capReached: false }, 200, origin);
     }
 
-    // Analyze each business's website in parallel (capped).
-    const results = await mapLimit(places, 6, async (p) => {
+    // Analyze each business's website in parallel (capped). Concurrency is a
+    // touch higher than before because a full scan can now be up to ~60 sites.
+    const results = await mapLimit(places, 8, async (p) => {
       const gbp = scoreGbp(p);
       let website = null as null | { score: number; bullets: string[]; features: WebFeatures };
       if (p.websiteUri) {
@@ -466,7 +521,7 @@ Deno.serve(async (req) => {
       };
     });
 
-    return json({ results, query, trade }, 200, origin);
+    return json({ results, query, trade, totalFound: places.length, pagesFetched, capReached }, 200, origin);
   }
 
   /* ── EMAIL ──────────────────────────────────────────────── */
