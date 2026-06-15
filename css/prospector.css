@@ -199,6 +199,15 @@
   font-size: 0.85rem;
 }
 .link-pill:hover { border-color: var(--accent); }
+.link-pill--email { font-weight: 600; }
+.link-pill--copy {
+  cursor: pointer;
+  color: var(--text-muted, #8a8f98);
+  background: transparent;
+  font-size: 0.78rem;
+  padding: 5px 10px;
+}
+.link-pill--copy:hover { color: var(--accent); }
 
 /* Findings columns */
 .lead-card__cols {

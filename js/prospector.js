@@ -240,6 +240,22 @@
       var m = el("a", "link-pill", "Google profile ↗"); m.href = biz.mapsUrl; m.target = "_blank"; m.rel = "noopener";
       links.appendChild(m);
     }
+    // Contact email scraped from the site — one tap to mail or copy.
+    if (biz.email) {
+      var mail = el("a", "link-pill link-pill--email", "✉ " + biz.email);
+      mail.href = "mailto:" + biz.email;
+      mail.title = "Click to email · click the copy icon to copy";
+      links.appendChild(mail);
+      var copyEmail = el("button", "link-pill link-pill--copy", "Copy");
+      copyEmail.type = "button";
+      copyEmail.addEventListener("click", function () {
+        navigator.clipboard.writeText(biz.email).then(function () {
+          copyEmail.textContent = "Copied ✓";
+          setTimeout(function () { copyEmail.textContent = "Copy"; }, 1500);
+        });
+      });
+      links.appendChild(copyEmail);
+    }
     card.appendChild(links);
 
     // Two columns of findings

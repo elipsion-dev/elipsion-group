@@ -186,24 +186,41 @@ function has(re: RegExp, s: string): boolean {
   return re.test(s);
 }
 
+/* Third-party FORM builders. A site can have a fully working lead form with no
+   raw <form> tag because it's injected by a plugin or embedded in an <iframe>
+   (Jotform, Typeform, HubSpot, Gravity Forms, CF7, etc.). Detecting these by
+   signature fixes the most common "no quote form" false negative. */
+const FORM_WIDGET_SIG = /(jotform|typeform|wufoo|formstack|paperform|cognitoforms|123formbuilder|gravity[-_ ]?form|gform_wrapper|gform_confirmation|wpcf7|contact-form-7|hsforms\.(net|com)|js\.hsforms|hbspt\.forms|formidable|ninja[-_ ]?forms|wpforms|fluentform|getform\.io|formspree|formsubmit\.co|leadconnector|gohighlevel)/i;
+
+/* Booking / scheduling platforms, including iframe-embedded ones. */
+const BOOKING_SIG = /(calendly|acuityscheduling|housecallpro|housecall\.com|servicetitan|getjobber|jobber|setmore|squareup\.com\/appointments|schedulicity|book(?:ing)?[-_ ]?(now|online|appointment)|schedule[-_ ]?(now|online|service|appointment)|request[-_ ]?appointment|servicefusion|servicem8|workiz|fieldedge|thryv|booking\.|simplybook)/i;
+
+/* Live / AI chat widgets — script-tag/domain signatures survive JS rendering. */
+const CHAT_SIG = /(tawk\.to|intercom|drift\.com|driftt|tidio|crisp\.chat|livechatinc|olark|zendesk|hubspot.*(conversations|messages)|podium|birdeye|customerchat|fb-customerchat|gorgias|smartsupp|chatbot|chat-?widget|"chat")/i;
+
+/* Self-serve / instant pricing. */
+const PRICING_SIG = /(instant[-_ ]?(quote|estimate|price)|price[-_ ]?(calculator|estimate)|cost[-_ ]?calculator|get[-_ ]?(a[-_ ]?)?(quote|pricing|estimate)|see[-_ ]?pricing|view[-_ ]?pricing|our[-_ ]?pricing|href=["'][^"']*pricing)/i;
+
+/* Strong call-to-action language. */
+const CTA_SIG = /(request[-_ ]?(a[-_ ]?)?quote|free[-_ ]?estimate|request[-_ ]?service|schedule[-_ ]?service|book[-_ ]?now|get[-_ ]?started|contact[-_ ]?us|call[-_ ]?(now|today))/i;
+
+/** Pull all <iframe src="…"> values (lowercased) so embedded widgets are visible. */
+function iframeSrcs(html: string): string {
+  const out: string[] = [];
+  for (const m of html.matchAll(/<iframe[^>]+src=["']([^"']+)["']/gi)) out.push(m[1].toLowerCase());
+  return out.join(" ");
+}
+
 function detectFeatures(rawHtml: string, finalUrl: string): WebFeatures {
   const html = rawHtml.slice(0, 800_000);
   const lower = html.toLowerCase();
+  const frames = iframeSrcs(html);
 
-  // Chat widgets — script-tag/domain signatures survive JS rendering.
-  const chatSig = /(tawk\.to|intercom|drift\.com|driftt|tidio|crisp\.chat|livechatinc|olark|zendesk|hubspot.*(conversations|messages)|podium|birdeye|customerchat|fb-customerchat|gorgias|smartsupp|chatbot|chat-?widget|"chat")/i;
-
-  // Booking / scheduling platforms.
-  const bookingSig = /(calendly|acuityscheduling|housecallpro|servicetitan|getjobber|jobber|setmore|squareup\.com\/appointments|schedulicity|book(?:ing)?[-_ ]?(now|online|appointment)|schedule[-_ ]?(now|online|service|appointment)|request[-_ ]?appointment)/i;
-
-  // Self-serve / instant pricing.
-  const pricingSig = /(instant[-_ ]?(quote|estimate|price)|price[-_ ]?(calculator|estimate)|cost[-_ ]?calculator|get[-_ ]?(a[-_ ]?)?(quote|pricing|estimate)|see[-_ ]?pricing|view[-_ ]?pricing|our[-_ ]?pricing|href=["'][^"']*pricing)/i;
-
-  // Strong call-to-action language.
-  const ctaSig = /(request[-_ ]?(a[-_ ]?)?quote|free[-_ ]?estimate|request[-_ ]?service|schedule[-_ ]?service|book[-_ ]?now|get[-_ ]?started|contact[-_ ]?us|call[-_ ]?(now|today))/i;
-
-  // A real lead form: a <form> that contains an input/textarea.
-  const hasForm = /<form[\s>]/i.test(html) && /<(input|textarea)[\s>]/i.test(html);
+  // A real lead form: a <form> with an input/textarea, OR a known form-builder
+  // signature anywhere, OR a form/booking widget embedded via <iframe>.
+  const nativeForm = /<form[\s>]/i.test(html) && /<(input|textarea)[\s>]/i.test(html);
+  const hasForm = nativeForm || FORM_WIDGET_SIG.test(html) ||
+    FORM_WIDGET_SIG.test(frames) || BOOKING_SIG.test(frames);
 
   return {
     reachable: true,
@@ -216,10 +233,10 @@ function detectFeatures(rawHtml: string, finalUrl: string): WebFeatures {
       /(localbusiness|hvacbusiness|"@type"\s*:\s*"[^"]*(business|service)[^"]*")/i.test(html),
     clickToCall: /href=["']tel:/i.test(html),
     quoteForm: hasForm,
-    strongCta: has(ctaSig, lower),
-    aiChat: has(chatSig, lower),
-    onlineBooking: has(bookingSig, lower),
-    instantPricing: has(pricingSig, lower),
+    strongCta: has(CTA_SIG, lower),
+    aiChat: has(CHAT_SIG, lower),
+    onlineBooking: has(BOOKING_SIG, lower) || BOOKING_SIG.test(frames),
+    instantPricing: has(PRICING_SIG, lower),
     reviews: /(testimonial|reviews|what our (customers|clients)|google reviews|★)/i.test(lower),
     faq: /(faq|frequently asked)/i.test(lower),
     emergency: /(24\/7|24-7|24 hour|emergency service|same[-_ ]?day)/i.test(lower),
@@ -233,6 +250,68 @@ function unreachableFeatures(): WebFeatures {
     quoteForm: false, strongCta: false, aiChat: false, onlineBooking: false,
     instantPricing: false, reviews: false, faq: false, emergency: false,
   };
+}
+
+/* Detect a JavaScript-rendered shell (React/Vue/Next/Angular). A raw fetch
+   can't execute JS, so for these the static HTML is a near-empty container and
+   feature detection would wrongly report EVERYTHING as missing. We flag it and
+   stop scoring it 1 / fabricating "missing" bullets. */
+function isJsShell(html: string): boolean {
+  // A shell is tiny by definition. If the doc is large it has real content —
+  // skip the (relatively costly) tag-stripping below entirely.
+  if (html.length > 40_000) return false;
+  const appRoot = /(<div[^>]+id=["'](root|__next|app|__nuxt)["']|data-reactroot|data-server-rendered|window\.__NUXT__|__NEXT_DATA__|ng-version=)/i.test(html);
+  if (!appRoot) return false;
+  // Strip scripts/styles/tags → how much human-visible text is actually present?
+  const visible = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&[a-z#0-9]+;/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return visible.length < 800;
+}
+
+/** Detect a contact email on the page. Prefers mailto: and same-domain
+    role addresses (info@, office@…); filters analytics/asset junk. */
+function pickEmail(html: string, host: string): string {
+  const raw = new Set<string>();
+  // mailto: links are anchored + cheap — always safe to scan the whole doc.
+  for (const m of html.matchAll(/mailto:\s*([^"'?>\s]+)/gi)) raw.add(m[1]);
+
+  // Plain-text emails: scan a SCRIPT/STYLE-STRIPPED copy with BOUNDED
+  // quantifiers. Minified JS / base64 data URIs are long dense alphanumeric
+  // runs that make an unbounded email regex backtrack quadratically (ReDoS) —
+  // stripping them out and capping {1,64} keeps this linear and CPU-cheap.
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .slice(0, 200_000);
+  for (const m of text.matchAll(/[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,255}\.[A-Za-z]{2,24}/g)) raw.add(m[0]);
+
+  const junk = /(sentry|wix|squarespace|\.png|\.jpe?g|\.gif|\.webp|\.svg|@2x|@3x|sprite|example\.(com|org)|yourdomain|your-?email|domain\.com|@email\.|placeholder|u00|\.js$|\.css$|core@|noreply|no-reply)/i;
+  const bareDomain = host.replace(/^www\./, "");
+
+  const clean = [...raw]
+    .map((e) => e.trim().toLowerCase().replace(/^mailto:/, "").replace(/[).,;:]+$/, ""))
+    .filter((e) => /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/.test(e))
+    .filter((e) => !junk.test(e) && e.length <= 80);
+  if (clean.length === 0) return "";
+
+  const score = (e: string): number => {
+    let s = 0;
+    if (bareDomain && e.endsWith("@" + bareDomain)) s += 5;          // on the business's own domain
+    if (/^(?:info|office|contact|service|sales|hello|support|admin|book|schedule|dispatch|help)\w*@/.test(e)) s += 3;
+    if (/(gmail|yahoo|hotmail|outlook|aol|icloud|live|msn)\./.test(e)) s -= 1; // generic personal inbox
+    return s;
+  };
+  clean.sort((a, b) => score(b) - score(a));
+  return clean[0];
+}
+
+function hostOf(url: string): string {
+  try { return new URL(url).hostname.toLowerCase(); } catch { return ""; }
 }
 
 // weight, and the bullet shown when the feature is MISSING.
@@ -266,33 +345,143 @@ function scoreWebsite(f: WebFeatures): { score: number; bullets: string[] } {
   return { score: clampScore(earned, possible), bullets };
 }
 
-async function analyzeWebsite(url: string): Promise<{ features: WebFeatures; score: number; bullets: string[] }> {
+type FetchResult =
+  | { ok: true; html: string; finalUrl: string }
+  | { ok: false; reason: "blocked" | "notfound" | "nonhtml" | "timeout" | "error"; status: number };
+
+/** Fetch one page with a browser-like header set and a per-request timeout. */
+async function fetchPage(url: string, timeoutMs: number): Promise<FetchResult> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 7000);
     const res = await fetch(url, {
       signal: controller.signal,
       redirect: "follow",
       headers: {
-        // Some hosts block non-browser agents; present a normal UA.
+        // Look as much like a real browser as possible — bare UA-only requests
+        // get challenged/blocked by Cloudflare and friends more often.
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        // NOTE: do NOT set Accept-Encoding manually — let the runtime negotiate
+        // and auto-decompress. Forcing br/gzip made big pages balloon in memory.
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
       },
-    }).finally(() => clearTimeout(timer));
-
-    const ctype = res.headers.get("content-type") || "";
-    if (!res.ok || !ctype.includes("text/html")) {
-      const f = unreachableFeatures();
-      return { features: f, score: 1, bullets: ["Website didn't return a readable page (it may be down, blocking bots, or not built yet)."] };
+    });
+    const ctype = (res.headers.get("content-type") || "").toLowerCase();
+    if (!res.ok) {
+      // 403/429/503 from a CDN usually means "bot challenge", not "no site".
+      const reason = res.status === 404 ? "notfound"
+        : (res.status === 403 || res.status === 429 || res.status === 503) ? "blocked"
+        : "error";
+      console.error("[prospector] fetch non-ok", url, res.status, ctype);
+      return { ok: false, reason, status: res.status };
     }
-    const html = await res.text();
-    const features = detectFeatures(html, res.url || url);
-    const { score, bullets } = scoreWebsite(features);
-    return { features, score, bullets };
-  } catch (_e) {
-    const f = unreachableFeatures();
-    return { features: f, score: 1, bullets: ["Couldn't load the website (timed out or refused the connection)."] };
+    if (ctype && !ctype.includes("html") && !ctype.includes("xml")) {
+      console.error("[prospector] fetch non-html", url, res.status, ctype);
+      return { ok: false, reason: "nonhtml", status: res.status };
+    }
+    // Cap the body HERE so a few multi-MB pages can't blow the function's
+    // memory limit when ~60 sites are processed concurrently. Everything we
+    // detect (head tags, forms, widgets, emails) lives early in the document.
+    const html = (await res.text()).slice(0, 300_000);
+    return { ok: true, html, finalUrl: res.url || url };
+  } catch (e) {
+    const name = (e as Error)?.name || "Error";
+    const msg = (e as Error)?.message || "";
+    // The single most useful diagnostic: AbortError = timeout (raise it);
+    // TypeError = connection/TLS refused or IP-blocked (needs a proxy/render).
+    console.error("[prospector] fetch threw", url, name, msg);
+    return { ok: false, reason: name === "AbortError" ? "timeout" : "error", status: 0 };
+  } finally {
+    clearTimeout(timer);
   }
+}
+
+/** Try to find a contact form / email on a likely secondary page when the
+    homepage came up thin. Conditional — only called when it can actually help. */
+async function fetchContactPage(baseUrl: string): Promise<FetchResult | null> {
+  let origin = "";
+  try { origin = new URL(baseUrl).origin; } catch { return null; }
+  // Keep this short — two probes max so a slow host can't blow the scan budget.
+  for (const path of ["/contact", "/contact-us"]) {
+    const r = await fetchPage(origin + path, 6000);
+    if (r.ok && r.html.length > 500) return r;
+  }
+  return null;
+}
+
+async function analyzeWebsite(url: string): Promise<{ features: WebFeatures; score: number | null; bullets: string[]; email: string }> {
+  let primary = await fetchPage(url, 10000);
+  // One retry for transient failures (slow shared hosts, momentary 5xx/refused).
+  // A genuine 404 or bot-block won't change on retry, so don't waste time on those.
+  if (!primary.ok && (primary.reason === "timeout" || primary.reason === "error")) {
+    primary = await fetchPage(url, 10000);
+  }
+
+  if (!primary.ok) {
+    const f = unreachableFeatures();
+    const bullet = primary.reason === "blocked"
+      ? "The site blocked our automated check (bot protection). It's likely live — open it manually to score it."
+      : primary.reason === "notfound"
+      ? "The linked website returned 404 — the page may have moved or the profile link is stale."
+      : primary.reason === "timeout"
+      ? "The website took too long to respond (timed out). It may be on slow hosting — open it manually to confirm."
+      : "Couldn't load the website automatically (connection refused or unreadable). Open it manually to confirm.";
+    // Honest null score instead of a misleading 1/10, and don't fabricate
+    // a list of "missing" features we never actually got to see.
+    return { features: f, score: null, bullets: [bullet], email: "" };
+  }
+
+  let html = primary.html;
+  const host = hostOf(primary.finalUrl);
+  let features = detectFeatures(html, primary.finalUrl);
+  let email = pickEmail(html, host);
+
+  // Peek at /contact when we're still missing a contact email or a lead form —
+  // both commonly live only on the contact page, even when the homepage is rich.
+  // Fetched at most ONCE per business; the email scan is bounded/cheap.
+  if (!email || !features.quoteForm) {
+    const contact = await fetchContactPage(url);
+    if (contact && contact.ok) {
+      // Only re-run the heavier feature scan if a form is what's missing; when
+      // only the email is missing, the cheap bounded scan is enough.
+      if (!features.quoteForm) {
+        features = mergeFeatures(features, detectFeatures(contact.html, contact.finalUrl));
+      }
+      if (!email) email = pickEmail(contact.html, host);
+      // If the homepage was a JS shell, the contact page is our real read.
+      if (isJsShell(html)) html = contact.html;
+    }
+  }
+
+  // JS-rendered shell we never managed to read (neither homepage nor contact had
+  // real content): report honestly instead of a bogus 1/10 with everything
+  // flagged missing.
+  if (isJsShell(html) && !features.quoteForm) {
+    return {
+      features,
+      score: null,
+      bullets: ["Built as a JavaScript app (React/Vue) — the automated reader can't see the rendered page, so it can't be scored reliably. Open it manually to assess."],
+      email,
+    };
+  }
+
+  const { score, bullets } = scoreWebsite(features);
+  return { features, score, bullets, email };
+}
+
+/** OR-merge two feature reads (a feature seen on any scanned page counts). */
+function mergeFeatures(a: WebFeatures, b: WebFeatures): WebFeatures {
+  const out = { ...a } as WebFeatures;
+  for (const k of Object.keys(a) as (keyof WebFeatures)[]) {
+    out[k] = (a[k] || b[k]) as never;
+  }
+  out.reachable = true;
+  return out;
 }
 
 /** Run async tasks with a concurrency cap so 20 site fetches don't blow the time budget. */
@@ -498,10 +687,10 @@ Deno.serve(async (req) => {
     // touch higher than before because a full scan can now be up to ~60 sites.
     const results = await mapLimit(places, 8, async (p) => {
       const gbp = scoreGbp(p);
-      let website = null as null | { score: number; bullets: string[]; features: WebFeatures };
+      let website = null as null | { score: number | null; bullets: string[]; features: WebFeatures; email: string };
       if (p.websiteUri) {
         const w = await analyzeWebsite(p.websiteUri);
-        website = { score: w.score, bullets: w.bullets, features: w.features };
+        website = { score: w.score, bullets: w.bullets, features: w.features, email: w.email };
       }
       return {
         id: p.id,
@@ -513,6 +702,7 @@ Deno.serve(async (req) => {
         rating: p.rating ?? null,
         reviewCount: p.userRatingCount ?? 0,
         category: p.primaryTypeDisplayName?.text ?? "",
+        email: website?.email ?? "",
         gbpScore: gbp.score,
         gbpBullets: gbp.bullets,
         websiteScore: website?.score ?? null,
