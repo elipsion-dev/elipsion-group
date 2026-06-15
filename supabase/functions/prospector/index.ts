@@ -540,37 +540,69 @@ Deno.serve(async (req) => {
     const gbpScore = typeof biz.gbpScore === "number" ? biz.gbpScore : 5;
     const overrides = (body.assumptions ?? {}) as Partial<typeof DEFAULT_ASSUMPTIONS>;
     const assumptions = { ...DEFAULT_ASSUMPTIONS, ...overrides };
+    // Revenue math is still computed and returned for reference, but it is
+    // deliberately NOT fed into the email — the email stays warm and number-free.
     const math = revenueMath(features, gbpScore, assumptions);
 
     const gbpBullets = Array.isArray(biz.gbpBullets) ? biz.gbpBullets as string[] : [];
     const webBullets = Array.isArray(biz.websiteBullets) ? biz.websiteBullets as string[] : [];
 
+    // Real stats from the clicked business — used to make the email specific.
+    const rating = typeof biz.rating === "number" ? biz.rating : null;
+    const reviewCount = typeof biz.reviewCount === "number" ? biz.reviewCount : 0;
+    const category = typeof biz.category === "string" && biz.category.trim() ? biz.category.trim() : "";
+    const industry = category || "local service";
+    const goodRating = rating != null && rating >= 4.0;
+
     const senderName = "Jacob";
-    const senderCompany = "ElipsionAI";
+    const senderCompany = "Elipsion AI";
 
     const prompt = [
-      `You write short, friendly, NON-pushy cold outreach emails for ${senderCompany}, run by ${senderName}, a software engineer who builds lead-capture systems and custom websites for HVAC contractors.`,
-      `Write an outreach email to "${name}".`,
+      `You write warm, friendly, low-pressure cold outreach emails for ${senderCompany}, run by ${senderName}, a software engineer who helps local service businesses improve the systems around their websites and Google profiles.`,
       ``,
-      `What ElipsionAI offers: custom websites, AI chatbots that answer after hours, online scheduling that syncs to their Google Calendar, instant-pricing quote pages so customers self-estimate, quote forms, missed-call text-back, review generation, and SEO.`,
+      `Write a short outreach email to "${name}". It must read like a genuinely helpful person reaching out — complimentary and humble, NOT a sales pitch and NEVER critical.`,
       ``,
-      `Findings about their Google profile (score ${gbpScore}/10):`,
+      `Follow THIS template's tone, flow, and length closely (adapt the wording, don't copy verbatim):`,
+      `---`,
+      `Hi,`,
+      ``,
+      `I came across ${name} while researching ${industry} companies and noticed you've built a solid reputation with your customers.${goodRating ? ` A ${rating!.toFixed(1)}-star rating is something most businesses would love to have.` : ``}`,
+      ``,
+      `I'm a software engineer, and I spend a lot of time helping local service businesses improve the systems around their websites and Google profiles. While looking through your online presence, I noticed a few opportunities that could make it easier for customers to contact you and book services online.`,
+      ``,
+      `Nothing major—just a handful of improvements that could help convert more of the traffic you're already getting.`,
+      ``,
+      `I put together a quick analysis and would be happy to share it with you. Most of the fixes are straightforward and can usually be implemented quickly without a full website rebuild.`,
+      ``,
+      `If you'd like me to send over the findings, just let me know.`,
+      ``,
+      `Thanks,`,
+      `${senderName}`,
+      `${senderCompany}`,
+      `---`,
+      ``,
+      `Real details about THIS business:`,
+      rating != null
+        ? `- Google rating: ${rating.toFixed(1)} stars from ${reviewCount} review(s)`
+        : `- No Google rating yet`,
+      category ? `- Category: ${category}` : ``,
+      ``,
+      `Private context (areas you found that COULD be improved — for YOUR understanding only):`,
       ...gbpBullets.map((b) => `- ${b}`),
-      ``,
-      `Findings about their website:`,
       ...webBullets.map((b) => `- ${b}`),
       ``,
-      `Use EXACTLY these numbers in a short "what this costs you" section (do not invent or change any number):`,
-      `- Average HVAC job value: $${math.avgJobValue}`,
-      `- Estimated calls/month: ${math.monthlyCalls}`,
-      `- Estimated missed calls/month: ${math.missedCallsPerMonth}`,
-      `- Revenue/month recoverable from missed-call text-back: $${math.missedCallRevenue}`,
-      `- Revenue/month lost from no online quote/booking: $${math.lostWebRevenue}`,
-      `- Revenue/month lost from a weak Google profile: $${math.profileLostRevenue}`,
-      `- TOTAL estimated lost revenue/month: $${math.totalMonthly}`,
-      `- TOTAL estimated lost revenue/year: $${math.totalAnnual}`,
-      ``,
-      `Rules: Lay the money section out as clear line items leading to the monthly total. Keep the whole email under ~180 words. Pick the 2-3 biggest gaps, don't list everything. Warm and specific, not salesy. Plain text. End with a soft ask to take a look / hop on a quick call. Sign as ${senderName}, ${senderCompany}. Output ONLY the email (subject line first as "Subject: ...").`,
+      `STRICT rules:`,
+      `- Open with a sincere, specific compliment. ${goodRating
+        ? `Their rating is strong (${rating!.toFixed(1)}★) — mention it warmly like the template.`
+        : `Their rating is weak or missing — do NOT mention the rating number at all; instead compliment their experience, longevity, or reputation generally.`}`,
+      `- Keep any mention of improvements VAGUE and positive ("a few opportunities", "a handful of improvements"). NEVER list the specific problems above, never use bullet points, never sound critical or alarmed.`,
+      `- Do NOT include ANY numbers, dollar amounts, percentages, or statistics other than the star rating in the opening.`,
+      `- Use the private context only to softly steer toward 1–2 themes (e.g. "easier to contact you", "book online") — never to call out flaws.`,
+      `- Offer to share a quick analysis / the findings, and reassure that fixes are straightforward and usually don't need a full website rebuild.`,
+      `- End with a soft, no-pressure ask like "if you'd like me to send over the findings, just let me know."`,
+      `- Under ~170 words. Plain text. Sign exactly as "${senderName}" then "${senderCompany}" on the next line.`,
+      `- Start with a short, friendly subject line as "Subject: ..." (low-key, not salesy — e.g. "A quick note about ${name}'s online presence").`,
+      `- Output ONLY the email.`,
     ].join("\n");
 
     try {
