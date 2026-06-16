@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <link rel="stylesheet" href="css/preview.css?v=2" />
+  <link rel="stylesheet" href="css/preview.css?v=3" />
 </head>
 <body data-state="loading">
 
@@ -73,11 +73,8 @@
         <div class="t-container hero__grid">
           <div class="hero__copy">
             <span class="hero__eyebrow">Serving <span data-biz="cityArea">your area</span> &amp; nearby</span>
-            <h1><span data-biz="city2">Your area</span>'s trusted name for fast, reliable heating &amp; cooling.</h1>
-            <p class="hero__sub">
-              Same-day service, upfront pricing, and friendly local technicians. Book online in
-              60 seconds or get an instant estimate — no phone tag required.
-            </p>
+            <h1 data-edit="heroHeadline">Your area's trusted name for fast, reliable heating &amp; cooling.</h1>
+            <p class="hero__sub" data-edit="heroSub">Same-day service, upfront pricing, and friendly local technicians. Book online in 60 seconds or get an instant estimate — no phone tag required.</p>
             <div class="hero__cta">
               <a class="t-btn t-btn--primary t-btn--lg" href="#quote">Get a Free Quote</a>
               <a class="t-btn t-btn--ghost t-btn--lg" data-tel href="#"><span class="t-btn__ico">📞</span> <span data-biz="phone">Call now</span></a>
@@ -114,16 +111,16 @@
         <div class="t-container">
           <div class="section__head">
             <span class="section__eyebrow">What we do</span>
-            <h2>Complete heating &amp; cooling, done right</h2>
-            <p>From a quick repair to a full system install, <span data-biz="name">our team</span> keeps your home comfortable year-round.</p>
+            <h2 data-edit="servicesHead">Complete heating &amp; cooling, done right</h2>
+            <p data-edit="servicesSub">From a quick repair to a full system install, {name} keeps your home comfortable year-round.</p>
           </div>
           <div class="services__grid">
-            <article class="svc"><div class="svc__ico">❄️</div><h3>AC Repair</h3><p>Fast diagnostics and lasting fixes to get your cool air back the same day.</p></article>
-            <article class="svc"><div class="svc__ico">🔥</div><h3>Heating &amp; Furnace</h3><p>Repairs, tune-ups, and installs to keep your home warm all winter.</p></article>
-            <article class="svc"><div class="svc__ico">🛠️</div><h3>New System Install</h3><p>Right-sized, energy-efficient systems with honest, upfront quotes.</p></article>
-            <article class="svc"><div class="svc__ico">🧰</div><h3>Maintenance Plans</h3><p>Seasonal tune-ups that prevent breakdowns and extend system life.</p></article>
-            <article class="svc"><div class="svc__ico">💨</div><h3>Indoor Air Quality</h3><p>Filtration, humidifiers, and duct care for cleaner, healthier air.</p></article>
-            <article class="svc"><div class="svc__ico">🚨</div><h3>24/7 Emergency</h3><p>No heat or no cool? We answer after hours — call anytime.</p></article>
+            <article class="svc"><div class="svc__ico" data-edit="svc1Icon">❄️</div><h3 data-edit="svc1Title">AC Repair</h3><p data-edit="svc1Desc">Fast diagnostics and lasting fixes to get your cool air back the same day.</p></article>
+            <article class="svc"><div class="svc__ico" data-edit="svc2Icon">🔥</div><h3 data-edit="svc2Title">Heating &amp; Furnace</h3><p data-edit="svc2Desc">Repairs, tune-ups, and installs to keep your home warm all winter.</p></article>
+            <article class="svc"><div class="svc__ico" data-edit="svc3Icon">🛠️</div><h3 data-edit="svc3Title">New System Install</h3><p data-edit="svc3Desc">Right-sized, energy-efficient systems with honest, upfront quotes.</p></article>
+            <article class="svc"><div class="svc__ico" data-edit="svc4Icon">🧰</div><h3 data-edit="svc4Title">Maintenance Plans</h3><p data-edit="svc4Desc">Seasonal tune-ups that prevent breakdowns and extend system life.</p></article>
+            <article class="svc"><div class="svc__ico" data-edit="svc5Icon">💨</div><h3 data-edit="svc5Title">Indoor Air Quality</h3><p data-edit="svc5Desc">Filtration, humidifiers, and duct care for cleaner, healthier air.</p></article>
+            <article class="svc"><div class="svc__ico" data-edit="svc6Icon">🚨</div><h3 data-edit="svc6Title">24/7 Emergency</h3><p data-edit="svc6Desc">No heat or no cool? We answer after hours — call anytime.</p></article>
           </div>
         </div>
       </section>
@@ -133,23 +130,23 @@
         <div class="t-container estimate__grid">
           <div class="estimate__copy">
             <span class="section__eyebrow">Instant estimate</span>
-            <h2>Ballpark your project in seconds</h2>
-            <p>Pick what you need and see an estimated range right away — then book a firm quote with one tap. No waiting on a callback.</p>
+            <h2 data-edit="estimateHead">Ballpark your project in seconds</h2>
+            <p data-edit="estimateSub">Pick what you need and see an estimated range right away — then book a firm quote with one tap. No waiting on a callback.</p>
             <ul class="ticks">
               <li>✓ Transparent, no-surprise pricing</li>
-              <li>✓ Free in-home assessment</li>
-              <li>✓ Financing available on installs</li>
+              <li>✓ Free on-site assessment</li>
+              <li>✓ Financing available</li>
             </ul>
           </div>
           <div class="estimate__card">
             <p class="estimate__label">Select services</p>
             <div class="est-opts" data-est-group="services">
-              <button class="est-opt" data-price="129" type="button">AC Repair <i>from $129</i></button>
-              <button class="est-opt" data-price="89"  type="button">Furnace Tune-Up <i>from $89</i></button>
-              <button class="est-opt" data-price="4500" type="button">New AC Install <i>from $4,500</i></button>
-              <button class="est-opt" data-price="3200" type="button">New Furnace <i>from $3,200</i></button>
-              <button class="est-opt" data-price="199" type="button">Duct Cleaning <i>from $199</i></button>
-              <button class="est-opt" data-price="149" type="button">Air Quality <i>from $149</i></button>
+              <button class="est-opt" data-price="129" type="button"><span data-edit="est1Label">AC Repair</span> <i data-edit="est1Price">from $129</i></button>
+              <button class="est-opt" data-price="89"  type="button"><span data-edit="est2Label">Furnace Tune-Up</span> <i data-edit="est2Price">from $89</i></button>
+              <button class="est-opt" data-price="4500" type="button"><span data-edit="est3Label">New AC Install</span> <i data-edit="est3Price">from $4,500</i></button>
+              <button class="est-opt" data-price="3200" type="button"><span data-edit="est4Label">New Furnace</span> <i data-edit="est4Price">from $3,200</i></button>
+              <button class="est-opt" data-price="199" type="button"><span data-edit="est5Label">Duct Cleaning</span> <i data-edit="est5Price">from $199</i></button>
+              <button class="est-opt" data-price="149" type="button"><span data-edit="est6Label">Air Quality</span> <i data-edit="est6Price">from $149</i></button>
             </div>
             <div class="estimate__total">
               <span>Estimated starting at</span>
@@ -170,8 +167,8 @@
           </div>
           <div class="area__copy">
             <span class="section__eyebrow">Proudly local</span>
-            <h2>Serving <span data-biz="city4">your community</span> &amp; surrounding areas</h2>
-            <p>We're your neighbors. When you call <span data-biz="name">us</span>, you get a local technician who knows the area — not a faraway call center.</p>
+            <h2 data-edit="areaHead">Serving {city} &amp; surrounding areas</h2>
+            <p data-edit="areaSub">We're your neighbors. When you call {name}, you get a local technician who knows the area — not a faraway call center.</p>
             <div class="area__row">
               <a class="t-btn t-btn--primary" data-tel href="#"><span class="t-btn__ico">📞</span> <span data-biz="phone">Call us</span></a>
               <span class="area__addr" data-show="address">📍 <span data-biz="address"></span></span>
@@ -185,16 +182,16 @@
         <div class="t-container">
           <div class="section__head">
             <span class="section__eyebrow">Reviews</span>
-            <h2>Trusted by homeowners across <span data-biz="city5">town</span></h2>
+            <h2 data-edit="reviewsHead">Trusted by homeowners across {city}</h2>
             <p class="reviews__score" data-show="rating">
               <span class="reviews__stars">★★★★★</span>
               <strong data-biz="rating">4.8</strong> average from <strong data-biz="reviewCount">120</strong> Google reviews
             </p>
           </div>
           <div class="reviews__grid">
-            <article class="review"><div class="review__stars">★★★★★</div><p>"Showed up the same day and had our AC running in under an hour. Honest pricing and super friendly. Highly recommend!"</p><footer>— Sarah M.</footer></article>
-            <article class="review"><div class="review__stars">★★★★★</div><p>"Booked online at 9pm and had a tech out the next morning. The whole process was so easy. These are my go-to people now."</p><footer>— James T.</footer></article>
-            <article class="review"><div class="review__stars">★★★★★</div><p>"New furnace install was smooth from quote to finish. No pressure, just clear options. Couldn't be happier."</p><footer>— Linda R.</footer></article>
+            <article class="review"><div class="review__stars">★★★★★</div><p data-edit="rev1Quote">"Showed up the same day and had our AC running in under an hour. Honest pricing and super friendly. Highly recommend!"</p><footer data-edit="rev1Author">— Sarah M.</footer></article>
+            <article class="review"><div class="review__stars">★★★★★</div><p data-edit="rev2Quote">"Booked online at 9pm and had a tech out the next morning. The whole process was so easy. These are my go-to people now."</p><footer data-edit="rev2Author">— James T.</footer></article>
+            <article class="review"><div class="review__stars">★★★★★</div><p data-edit="rev3Quote">"New furnace install was smooth from quote to finish. No pressure, just clear options. Couldn't be happier."</p><footer data-edit="rev3Author">— Linda R.</footer></article>
           </div>
         </div>
       </section>
@@ -260,8 +257,8 @@
       <!-- ── FINAL CTA ─────────────────────────────────────────── -->
       <section class="cta">
         <div class="t-container cta__inner">
-          <h2>Need service today? We're ready to help.</h2>
-          <p>Call now or book online — comfort is one tap away.</p>
+          <h2 data-edit="ctaHead">Need service today? We're ready to help.</h2>
+          <p data-edit="ctaSub">Call now or book online — comfort is one tap away.</p>
           <div class="cta__row">
             <a class="t-btn t-btn--primary t-btn--lg" data-tel href="#"><span class="t-btn__ico">📞</span> <span data-biz="phone">Call now</span></a>
             <a class="t-btn t-btn--ghost-light t-btn--lg" href="#quote">Get a Free Quote</a>
@@ -276,7 +273,7 @@
       <div class="t-container t-footer__inner">
         <div class="t-footer__col">
           <span class="t-brand__name" data-biz="name">Your HVAC Company</span>
-          <p>Fast, friendly, local heating &amp; cooling for <span data-biz="city6">your community</span> and surrounding areas.</p>
+          <p data-edit="footerTagline">Fast, friendly, local heating &amp; cooling for {city} and surrounding areas.</p>
         </div>
         <div class="t-footer__col">
           <h4>Contact</h4>
@@ -298,6 +295,18 @@
     </footer>
 
   </div><!-- /#site -->
+
+  <!-- ── EDIT TOOLBAR (shown only in ?edit=1 mode) ─────────────── -->
+  <div id="editbar" class="editbar hidden">
+    <span class="editbar__tag">✏️ Editing preview</span>
+    <label class="editbar__preset">Industry:
+      <select id="editbar-preset"><option value="">— preset —</option></select>
+    </label>
+    <span class="editbar__hint">Click any text on the page to change it.</span>
+    <span class="editbar__status" id="editbar-status"></span>
+    <a class="editbar__btn editbar__btn--ghost" id="editbar-view" href="#" target="_blank" rel="noopener">Open clean ↗</a>
+    <button class="editbar__btn editbar__btn--primary" id="editbar-save" type="button">Save changes</button>
+  </div>
 
   <!-- ── CHATBOT (supercharged simulation) ─────────────────────── -->
   <div id="chat" class="chat hidden" aria-live="polite">
@@ -337,6 +346,6 @@
   </div>
 
   <script src="js/config.js"></script>
-  <script src="js/preview.js?v=2"></script>
+  <script src="js/preview.js?v=3"></script>
 </body>
 </html>

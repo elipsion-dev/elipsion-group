@@ -641,6 +641,35 @@ async function dbGetPreview(
   }
 }
 
+/** Merge an edited `content` object into an existing preview row's data,
+    preserving name/phone/rating/etc. Returns false if the row is gone. */
+async function dbUpdatePreviewContent(token: string, content: unknown): Promise<boolean> {
+  const headers = dbHeaders();
+  if (!headers) return false;
+  const existing = await dbGetPreview(token);
+  if (!existing) return false;
+  const merged = Object.assign(
+    {},
+    (existing.data && typeof existing.data === "object") ? existing.data as Record<string, unknown> : {},
+    { content },
+  );
+  const url = `${Deno.env.get("SUPABASE_URL")}/rest/v1/${PREVIEW_TABLE}` +
+    `?token=eq.${encodeURIComponent(token)}`;
+  try {
+    const res = await fetch(url, {
+      method: "PATCH",
+      headers: { ...headers, "Prefer": "return=minimal" },
+      body: JSON.stringify({ data: merged }),
+    });
+    if (res.ok) return true;
+    console.error("updatePreview patch failed", res.status, await res.text());
+    return false;
+  } catch (e) {
+    console.error("updatePreview patch threw", e);
+    return false;
+  }
+}
+
 /* ============================================================
    Handler
    ============================================================ */
@@ -726,6 +755,22 @@ Deno.serve(async (req) => {
     const token = await dbSavePreview(payload);
     if (!token) return json({ error: "Could not save preview." }, 502, origin);
     return json({ ok: true, token }, 200, origin);
+  }
+
+  /* ── UPDATE PREVIEW (inline editor) ──────────────────────────
+     Merge an edited `content` object (industry copy, services,
+     estimate items…) into an existing preview. Password-gated;
+     the editor prompts for the same prospector password.        */
+  if (action === "updatePreview") {
+    const token = typeof body.token === "string" ? body.token.trim() : "";
+    if (!/^[a-z0-9]{4,16}$/.test(token)) return json({ error: "Invalid link." }, 400, origin);
+    const content = body.content;
+    if (!content || typeof content !== "object") return json({ error: "Missing content." }, 400, origin);
+    if (JSON.stringify(content).length > 20000) return json({ error: "Content too large." }, 413, origin);
+
+    const updated = await dbUpdatePreviewContent(token, content);
+    if (!updated) return json({ error: "Could not save changes." }, 502, origin);
+    return json({ ok: true }, 200, origin);
   }
 
   /* ── LINE TYPE (Telnyx Number Lookup) ────────────────────────

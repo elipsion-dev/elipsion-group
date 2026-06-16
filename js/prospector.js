@@ -400,11 +400,15 @@
         });
         var open = el("a", "btn btn--ghost btn--sm", "Open ↗");
         open.href = url; open.target = "_blank"; open.rel = "noopener";
+        var edit = el("a", "btn btn--ghost btn--sm", "✏️ Edit");
+        edit.href = url + "&edit=1"; edit.target = "_blank"; edit.rel = "noopener";
+        edit.title = "Edit copy / switch industry (e.g. dust collection) before sending";
         row.appendChild(copy);
         row.appendChild(open);
+        row.appendChild(edit);
         out.appendChild(row);
 
-        var note = el("p", "preview-note text-xs text-muted", "Link works for 14 days, then expires.");
+        var note = el("p", "preview-note text-xs text-muted", "Link works for 14 days, then expires. Use Edit to change the copy or industry.");
         out.appendChild(note);
         show(out);
       }).catch(function () {
