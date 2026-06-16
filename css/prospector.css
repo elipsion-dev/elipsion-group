@@ -257,6 +257,23 @@
   margin-bottom: 10px;
 }
 
+/* ── Preview-site builder ─────────────────────────────────── */
+.lead-card__preview { margin-top: 14px; border-top: 1px dashed var(--border); padding-top: 16px; }
+.preview-out { margin-top: 12px; }
+.preview-link {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  background: var(--card-bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.preview-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.preview-note { margin: 10px 0 0; }
+
 @media (max-width: 600px) {
   .search-bar { flex-wrap: wrap; }
   .search-bar #trade { width: 100%; }

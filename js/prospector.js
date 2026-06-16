@@ -311,7 +311,73 @@
     emailWrap.appendChild(emailOut);
     card.appendChild(emailWrap);
 
+    // Preview-site generator: one click builds a personalized demo site
+    // (preview.html?p=token) seeded with this business's info. The link
+    // self-expires after 14 days. Great for "let me show you what your
+    // new site could look like" on a call.
+    card.appendChild(renderPreviewBuilder(biz));
+
     resultsEl.appendChild(card);
+  }
+
+  /* ── Preview-site builder (per card) ─────────────────────── */
+  function renderPreviewBuilder(biz) {
+    var wrap = el("div", "lead-card__preview");
+    var btn = el("button", "btn btn--ghost btn--sm", "🌐 Build preview site");
+    btn.type = "button";
+    var out = el("div", "preview-out hidden");
+    wrap.appendChild(btn);
+    wrap.appendChild(out);
+
+    btn.addEventListener("click", function () {
+      btn.disabled = true;
+      btn.textContent = "Building…";
+      call({ action: "savePreview", business: biz }).then(function (r) {
+        if (r.status === 401) { sessionStorage.removeItem(PW_KEY); location.reload(); return; }
+        btn.disabled = false;
+        btn.textContent = "🌐 Rebuild preview site";
+        if (!r.ok || !r.data || !r.data.token) {
+          out.textContent = (r.data && r.data.error) || "Could not build preview.";
+          show(out);
+          return;
+        }
+        var url = new URL("preview.html?p=" + encodeURIComponent(r.data.token), location.href).href;
+        out.innerHTML = "";
+
+        var field = el("input", "preview-link");
+        field.type = "text";
+        field.readOnly = true;
+        field.value = url;
+        field.addEventListener("focus", function () { field.select(); });
+        out.appendChild(field);
+
+        var row = el("div", "preview-actions");
+        var copy = el("button", "btn btn--primary btn--sm", "Copy link");
+        copy.type = "button";
+        copy.addEventListener("click", function () {
+          navigator.clipboard.writeText(url).then(function () {
+            copy.textContent = "Copied ✓";
+            setTimeout(function () { copy.textContent = "Copy link"; }, 1500);
+          });
+        });
+        var open = el("a", "btn btn--ghost btn--sm", "Open ↗");
+        open.href = url; open.target = "_blank"; open.rel = "noopener";
+        row.appendChild(copy);
+        row.appendChild(open);
+        out.appendChild(row);
+
+        var note = el("p", "preview-note text-xs text-muted", "Link works for 14 days, then expires.");
+        out.appendChild(note);
+        show(out);
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = "🌐 Build preview site";
+        out.textContent = "Network error.";
+        show(out);
+      });
+    });
+
+    return wrap;
   }
 
   /* ── Init: skip lock if password already in this session ─── */

@@ -534,6 +534,104 @@ function revenueMath(features: WebFeatures, gbpScore: number, a: typeof DEFAULT_
 }
 
 /* ============================================================
+   Preview store (Supabase Postgres via PostgREST)
+   ------------------------------------------------------------
+   Backs the prospect demo-site short links. Uses the service-role
+   key (auto-injected into every edge function) so it can bypass
+   RLS on the locked-down site_previews table.
+   ============================================================ */
+const PREVIEW_TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
+const PREVIEW_TABLE = "site_previews";
+
+/** Headers for authenticated PostgREST calls (service role). */
+function dbHeaders(): HeadersInit | null {
+  const url = Deno.env.get("SUPABASE_URL");
+  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!url || !key) {
+    console.error("SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY not available.");
+    return null;
+  }
+  return {
+    "apikey": key,
+    "Authorization": `Bearer ${key}`,
+    "Content-Type": "application/json",
+  };
+}
+
+/** Short, URL-safe, unambiguous token (no 0/o/1/l) — e.g. "k7m4p9q". */
+function makeToken(len = 7): string {
+  const alphabet = "23456789abcdefghjkmnpqrstuvwxyz";
+  const bytes = new Uint8Array(len);
+  crypto.getRandomValues(bytes);
+  let out = "";
+  for (let i = 0; i < len; i++) out += alphabet[bytes[i] % alphabet.length];
+  return out;
+}
+
+/** Pull the city token out of a Google formatted address.
+    "1234 Main St, Evansville, IN 47714, USA" → "Evansville".
+    Defensive: returns "" when the shape is unexpected. */
+function cityFromAddress(address: string): string {
+  if (!address) return "";
+  const parts = address.split(",").map((p) => p.trim()).filter(Boolean);
+  // Typical shape: [street, city, "ST ZIP", "USA"]. The city is the part
+  // just before the one starting with a 2-letter state code.
+  for (let i = 1; i < parts.length; i++) {
+    if (/^[A-Z]{2}\b/.test(parts[i]) && parts[i - 1]) return parts[i - 1];
+  }
+  // Fallback: second token if present, else first.
+  return parts[1] || parts[0] || "";
+}
+
+/** Insert a preview row, retrying on the rare token collision. */
+async function dbSavePreview(payload: unknown): Promise<string | null> {
+  const headers = dbHeaders();
+  if (!headers) return null;
+  const base = `${Deno.env.get("SUPABASE_URL")}/rest/v1/${PREVIEW_TABLE}`;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const token = makeToken();
+    try {
+      const res = await fetch(base, {
+        method: "POST",
+        headers: { ...headers, "Prefer": "return=minimal" },
+        body: JSON.stringify({ token, data: payload }),
+      });
+      if (res.ok) return token;
+      // 409 = primary-key collision; try a fresh token.
+      if (res.status === 409) continue;
+      console.error("savePreview insert failed", res.status, await res.text());
+      return null;
+    } catch (e) {
+      console.error("savePreview insert threw", e);
+      return null;
+    }
+  }
+  return null;
+}
+
+/** Fetch one preview row by token (or null). */
+async function dbGetPreview(
+  token: string,
+): Promise<{ data: unknown; created_at: string } | null> {
+  const headers = dbHeaders();
+  if (!headers) return null;
+  const url = `${Deno.env.get("SUPABASE_URL")}/rest/v1/${PREVIEW_TABLE}` +
+    `?token=eq.${encodeURIComponent(token)}&select=data,created_at&limit=1`;
+  try {
+    const res = await fetch(url, { headers });
+    if (!res.ok) {
+      console.error("getPreview select failed", res.status, await res.text());
+      return null;
+    }
+    const rows = await res.json();
+    return Array.isArray(rows) && rows[0] ? rows[0] : null;
+  } catch (e) {
+    console.error("getPreview select threw", e);
+    return null;
+  }
+}
+
+/* ============================================================
    Handler
    ============================================================ */
 Deno.serve(async (req) => {
@@ -557,6 +655,23 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid request." }, 400, origin);
   }
 
+  // ── PUBLIC: getPreview ──────────────────────────────────────
+  // Prospect-facing demo sites are loaded by token (template.html?p=…).
+  // This branch runs BEFORE the password gate because the prospect has no
+  // password — they just have the link we texted them. It only ever returns
+  // the curated, non-sensitive demo payload, and only while it's fresh.
+  if (body.action === "getPreview") {
+    const token = typeof body.token === "string" ? body.token.trim() : "";
+    if (!/^[a-z0-9]{4,16}$/.test(token)) {
+      return json({ error: "Invalid link." }, 400, origin);
+    }
+    const row = await dbGetPreview(token);
+    if (!row) return json({ error: "not_found" }, 404, origin);
+    const ageMs = Date.now() - new Date(row.created_at).getTime();
+    if (ageMs > PREVIEW_TTL_MS) return json({ error: "expired" }, 410, origin);
+    return json({ ok: true, data: row.data }, 200, origin);
+  }
+
   // ── Password gate: nothing paid happens before this passes. ──
   const expected = Deno.env.get("PROSPECTOR_PASSWORD");
   if (!expected) {
@@ -573,6 +688,34 @@ Deno.serve(async (req) => {
   /* ── AUTH: password already verified above; just confirm. ── */
   if (action === "auth") {
     return json({ ok: true }, 200, origin);
+  }
+
+  /* ── SAVE PREVIEW ────────────────────────────────────────────
+     Store a curated, prospect-facing payload and hand back a short
+     token. The static template.html later fetches it via getPreview.
+     Only safe display fields are persisted — no scores/bullets.   */
+  if (action === "savePreview") {
+    const b = (body.business && typeof body.business === "object")
+      ? body.business as Record<string, unknown>
+      : null;
+    if (!b) return json({ error: "Missing business." }, 400, origin);
+
+    const str = (v: unknown, max: number) =>
+      (typeof v === "string" ? v : "").trim().slice(0, max);
+    const address = str(b.address, 200);
+    const payload = {
+      name: str(b.name, 120) || "Your HVAC Company",
+      phone: str(b.phone, 40),
+      address,
+      city: cityFromAddress(address),
+      email: str(b.email, 120),
+      rating: typeof b.rating === "number" ? b.rating : null,
+      reviewCount: typeof b.reviewCount === "number" ? b.reviewCount : 0,
+    };
+
+    const token = await dbSavePreview(payload);
+    if (!token) return json({ error: "Could not save preview." }, 502, origin);
+    return json({ ok: true, token }, 200, origin);
   }
 
   /* ── SCAN ───────────────────────────────────────────────── */
