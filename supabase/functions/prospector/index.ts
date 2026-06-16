@@ -583,6 +583,16 @@ function cityFromAddress(address: string): string {
   return parts[1] || parts[0] || "";
 }
 
+/** Normalize a US phone string to E.164 (+1XXXXXXXXXX) for Telnyx.
+    Returns "" when it doesn't look like a usable number. */
+function toE164US(phone: string): string {
+  const d = (phone || "").replace(/[^\d]/g, "");
+  if ((phone || "").trim().startsWith("+")) return "+" + d;
+  if (d.length === 10) return "+1" + d;
+  if (d.length === 11 && d[0] === "1") return "+" + d;
+  return "";
+}
+
 /** Insert a preview row, retrying on the rare token collision. */
 async function dbSavePreview(payload: unknown): Promise<string | null> {
   const headers = dbHeaders();
@@ -716,6 +726,45 @@ Deno.serve(async (req) => {
     const token = await dbSavePreview(payload);
     if (!token) return json({ error: "Could not save preview." }, 502, origin);
     return json({ ok: true, token }, 200, origin);
+  }
+
+  /* ── LINE TYPE (Telnyx Number Lookup) ────────────────────────
+     Is the published number a cell, landline, or VoIP? Helps
+     decide whether the prospect can be texted. On-demand (one
+     paid lookup per click). Uses ?type=carrier to avoid the
+     extra-cost caller-name/CNAM lookup.                         */
+  if (action === "lineType") {
+    const e164 = toE164US(typeof body.phone === "string" ? body.phone : "");
+    if (!e164) return json({ error: "No usable phone number." }, 400, origin);
+
+    const key = Deno.env.get("TELNYX_API_KEY");
+    if (!key) {
+      console.error("TELNYX_API_KEY not configured.");
+      return json({ error: "Line-type lookup is not configured." }, 503, origin);
+    }
+    try {
+      const url = "https://api.telnyx.com/v2/number_lookup/" +
+        encodeURIComponent(e164) + "?type=carrier";
+      const res = await fetch(url, { headers: { "Authorization": "Bearer " + key } });
+      if (!res.ok) {
+        console.error("Telnyx lookup failed", res.status, await res.text());
+        return json({ error: "Lookup failed." }, 502, origin);
+      }
+      const payload = await res.json();
+      const carrier = (payload && payload.data && payload.data.carrier) || {};
+      const type = (carrier.type || "unknown").toString().toLowerCase();
+      // "mobile" (and the ambiguous "fixed line or mobile") can receive SMS.
+      const textable = type === "mobile" || type === "fixed line or mobile";
+      return json({
+        ok: true,
+        type: type,
+        carrier: carrier.name || "",
+        textable: textable,
+      }, 200, origin);
+    } catch (e) {
+      console.error("Telnyx lookup threw", e);
+      return json({ error: "Lookup failed (network)." }, 502, origin);
+    }
   }
 
   /* ── SCAN ───────────────────────────────────────────────── */

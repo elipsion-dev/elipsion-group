@@ -256,6 +256,29 @@
       });
       links.appendChild(copyEmail);
     }
+    // Line-type lookup (Telnyx): is this number a cell we can text?
+    if (biz.phone) {
+      var ltBtn = el("button", "link-pill link-pill--linetype", "📱 Check line type");
+      ltBtn.type = "button";
+      ltBtn.title = "Look up whether this number is a cell, landline, or VoIP";
+      ltBtn.addEventListener("click", function () {
+        ltBtn.disabled = true;
+        ltBtn.textContent = "Checking…";
+        call({ action: "lineType", phone: biz.phone }).then(function (r) {
+          if (r.status === 401) { sessionStorage.removeItem(PW_KEY); location.reload(); return; }
+          if (!r.ok || !r.data || !r.data.ok) {
+            ltBtn.disabled = false;
+            ltBtn.textContent = (r.data && r.data.error) || "Lookup failed — retry";
+            return;
+          }
+          ltBtn.replaceWith(lineTypeBadge(r.data));
+        }).catch(function () {
+          ltBtn.disabled = false;
+          ltBtn.textContent = "Network error — retry";
+        });
+      });
+      links.appendChild(ltBtn);
+    }
     card.appendChild(links);
 
     // Two columns of findings
@@ -318,6 +341,21 @@
     card.appendChild(renderPreviewBuilder(biz));
 
     resultsEl.appendChild(card);
+  }
+
+  /* ── Line-type badge (from Telnyx lookup) ────────────────── */
+  function lineTypeBadge(d) {
+    var map = {
+      "mobile":                { label: "📱 Cell · textable", cls: "lt--cell" },
+      "fixed line or mobile":  { label: "📱 Cell/landline",    cls: "lt--maybe" },
+      "fixed line":            { label: "☎ Landline",          cls: "lt--land" },
+      "voip":                  { label: "🌐 VoIP",             cls: "lt--voip" },
+      "toll free":             { label: "☎ Toll-free",         cls: "lt--land" }
+    };
+    var info = map[d.type] || { label: "❓ " + (d.type || "unknown"), cls: "lt--unknown" };
+    var span = el("span", "lead-linetype " + info.cls, info.label);
+    span.title = (d.carrier ? d.carrier + " · " : "") + "line type: " + (d.type || "unknown");
+    return span;
   }
 
   /* ── Preview-site builder (per card) ─────────────────────── */
