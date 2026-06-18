@@ -30,6 +30,7 @@
   var DEFAULTS = {
     heroHeadline: "{city}'s trusted name for fast, reliable heating & cooling.",
     heroSub: "Same-day service, upfront pricing, and friendly local technicians. Book online in 60 seconds or get an instant estimate — no phone tag required.",
+    heroEyebrow: "Serving the {city} area",
     servicesHead: "Complete heating & cooling, done right",
     servicesSub: "From a quick repair to a full system install, {name} keeps your home comfortable year-round.",
     svc1Icon: "❄️", svc1Title: "AC Repair", svc1Desc: "Fast diagnostics and lasting fixes to get your cool air back the same day.",
@@ -199,8 +200,55 @@
     show($("#chat"));
     document.body.setAttribute("data-state", "ready");
     initFeatures();
+    initNav();
+    initRouter();
     if (TOKEN && new URLSearchParams(location.search).get("edit")) initEditor();
     scheduleChatNudge();
+  }
+
+  /* ════════════════════════════════════════════════════════
+     Multi-view router — one page, several [data-view] panels.
+     Nav links use #/<view> hashes; the ?p=token/?edit query
+     string is untouched, so the preview payload and edit mode
+     keep working exactly as before.
+     ════════════════════════════════════════════════════════ */
+  function viewFromHash() {
+    var h = (location.hash || "").replace(/^#\/?/, "").trim();
+    return h || "home";
+  }
+  function initRouter() {
+    var views = all("[data-view]");
+    if (!views.length) return;
+    var links = all("[data-nav]");
+    function go(name) {
+      var exists = views.some(function (v) { return v.getAttribute("data-view") === name; });
+      if (!exists) name = "home";
+      views.forEach(function (v) { v.classList.toggle("hidden", v.getAttribute("data-view") !== name); });
+      links.forEach(function (a) { a.classList.toggle("is-active", a.getAttribute("data-nav") === name); });
+      closeNav();
+      // Don't yank the scroll position while someone is mid-edit.
+      if (!EDITING) window.scrollTo(0, 0);
+    }
+    window.addEventListener("hashchange", function () { go(viewFromHash()); });
+    go(viewFromHash());
+  }
+
+  /* ── Mobile nav toggle ───────────────────────────────────── */
+  function closeNav() {
+    var nav = $("#t-nav");
+    var btn = $("#nav-toggle");
+    if (nav) nav.classList.remove("is-open");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  function initNav() {
+    var nav = $("#t-nav");
+    var btn = $("#nav-toggle");
+    if (btn && nav) {
+      btn.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
   }
 
   /* ── Derivations ─────────────────────────────────────────── */
@@ -241,6 +289,7 @@
 
     // City appears in several spots with slightly different copy.
     setText("cityArea", cityOr);
+    setText("heroEyebrow", city ? "Serving the " + city + " area" : "Serving your area");
     setText("city2", city || "Your area");
     setText("city3", city || "Your area");
     setText("city4", city || "your community");
@@ -415,7 +464,7 @@
   /* ── Chatbot (simulation) ────────────────────────────────── */
   var CHAT_REPLIES = {
     price: "Great question! Most AC repairs start at $129, and we always give you the price upfront before any work begins — no surprises. Want me to book a technician to take a look? 🔧",
-    book: "Awesome — I can get you on the schedule. We have openings as early as tomorrow morning. Just scroll up to \"Online Booking\" to pick a time, or call us and we'll handle it for you! 📅",
+    book: "Awesome — I can get you on the schedule. We have openings as early as tomorrow morning. Head to the \"Instant Quote\" page to pick a time, or call us and we'll handle it for you! 📅",
     emergency: "I'm so sorry — let's get help moving fast. We offer 24/7 emergency service. Please tap the call button at the top to reach our on-call team right now, and we'll get someone out to you ASAP. 🚨"
   };
   var chatOpened = false;
