@@ -28,6 +28,8 @@
      {city}/{name} are substituted at render. *Price keys are stored
      as numbers and rendered as "from $N".                         */
   var DEFAULTS = {
+    heroImg: "assets/preview/hvac-technician-hero.jpg",
+    logoImg: "assets/preview/Logo.png",
     heroHeadline: "{city}'s trusted name for fast, reliable heating & cooling.",
     heroSub: "Same-day service, upfront pricing, and friendly local technicians. Book online in 60 seconds or get an instant estimate — no phone tag required.",
     heroEyebrow: "Serving the {city} area",
@@ -61,6 +63,8 @@
   /* ── Industry presets (each a COMPLETE content object) ─────── */
   var PRESETS = {
     "Dust Collection": {
+      heroImg: "assets/preview/dust-collection-hero.png",
+      logoImg: "assets/preview/dust-collection-logo.png",
       heroHeadline: "{city}'s experts in industrial dust & fume collection.",
       heroSub: "Cleaner air, safer shops, and NFPA-compliant systems. Get a fast on-site assessment and a clear quote — no runaround.",
       servicesHead: "Complete dust collection, engineered right",
@@ -90,6 +94,8 @@
       ctaSub: "Call now or request a quote — a cleaner, safer facility is one step away."
     },
     "Plumbing": {
+      heroImg: "assets/preview/plumber-hero.png",
+      logoImg: "assets/preview/plumbing-logo.png",
       heroHeadline: "{city}'s trusted plumbers — fast, clean, done right.",
       heroSub: "Same-day service, upfront pricing, and friendly local plumbers. Book online in 60 seconds or get an instant estimate — no phone tag required.",
       servicesHead: "Complete plumbing, done right",
@@ -119,6 +125,8 @@
       ctaSub: "Call now or book online — peace of mind is one tap away."
     },
     "Electrical": {
+      heroImg: "assets/preview/electrician-hero.png",
+      logoImg: "assets/preview/electrical-logo.png",
       heroHeadline: "{city}'s trusted electricians — safe, fast, code-compliant.",
       heroSub: "Same-day service, upfront pricing, and licensed local electricians. Book online in 60 seconds or get an instant estimate — no phone tag required.",
       servicesHead: "Complete electrical, done safely",
@@ -148,6 +156,8 @@
       ctaSub: "Call now or book online — safe power is one tap away."
     },
     "General Contractor": {
+      heroImg: "assets/preview/general-contractor-hero.png",
+      logoImg: "assets/preview/general-contractor-logo.png",
       heroHeadline: "{city}'s trusted name for quality home improvement.",
       heroSub: "Upfront pricing, clean job sites, and craftsmanship you can count on. Book a consult online or get an instant estimate — no phone tag.",
       servicesHead: "Complete home improvement, done right",
@@ -363,7 +373,22 @@
         }
       });
     });
+    applyImages(c);
     syncQuoteOptions(c);
+  }
+  /* Hero photo, navbar logo, and favicon follow the industry.
+     Presets carry their own image paths; DEFAULTS holds the HVAC
+     set, so a preview with no saved images stays on HVAC. */
+  function setImg(el, src) {
+    if (!el || !src) return;
+    el.classList.remove("img--missing", "img--hidden");
+    el.setAttribute("src", src);
+  }
+  function applyImages(c) {
+    setImg($(".hero__media img"), c.heroImg);
+    setImg($(".t-brand__logo"), c.logoImg);
+    var icon = $('link[rel="icon"]');
+    if (icon && c.logoImg) icon.setAttribute("href", c.logoImg);
   }
   /* The quote form's "What do you need?" mirrors the service titles. */
   function syncQuoteOptions(c) {
@@ -549,6 +574,12 @@
         c[key] = (node.textContent || "").trim();
       }
     });
+    // Persist the industry images (not [data-edit] nodes). getAttribute
+    // returns the literal relative path we set, not a resolved URL.
+    var hero = $(".hero__media img");
+    var logo = $(".t-brand__logo");
+    if (hero && hero.getAttribute("src")) c.heroImg = hero.getAttribute("src");
+    if (logo && logo.getAttribute("src")) c.logoImg = logo.getAttribute("src");
     return c;
   }
   function initEditor() {
